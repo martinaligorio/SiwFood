@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Cuoco</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+	<h1>Dettagli </h1>
+	<div th:if="${cuoco}">
+		<h1 th:text="${cuoco.nome}">Nome </h1>
+        <h1 th:text="${cuoco.cognome}">Cognome </h1>
+		<div>Data di nascita: <span th:text="'(' + ${cuoco.dataDiNascita} + ')'">2000</span></div>
+        <div>Descrizione: <span th:text="'(' + ${cuoco.descrizione} + ')'">2000</span></div>
+		<span><img width="30%" th:src="${cuoco.urlImmagine}" /></span>
+	</div>
+	<div th:unless="${cuoco}">Non esiste</div>
+</body>
+
+</html>
+
+
