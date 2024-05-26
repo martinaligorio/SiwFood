@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.RicettaService;
@@ -47,15 +47,6 @@ public class RicettaController {
 		return "redirect:ricetta/"+ricetta.getId();
 	}
 	
-	 @GetMapping("/formSearchRicette")
-	 public String formSearchRicette() {
-	    return "formSearchRicette.html";
-	 }
 	 
-	 @PostMapping("/searchRicette")
-	 public String searchRicette(Model model, @RequestParam Integer year) {
-		 model.addAttribute("ricette", this.ricettaService.findByYear(year));
-		 return "foundRicette.html";
-	 }
 
 }

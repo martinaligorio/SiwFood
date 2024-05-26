@@ -25,8 +25,4 @@ public class RicettaService {
         throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
-    public Object findByYear(Integer year) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByYear'");
-    }
 }    
