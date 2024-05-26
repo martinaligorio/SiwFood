@@ -1,5 +1,7 @@
 package it.uniroma3.siwfood.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,10 @@ public class CuocoService {
         return cuocoRepository.findAll();
     }
 
+    public List<Cuoco> findByName(String nome) {
+        return cuocoRepository.findByNome(nome);
+    }
+    
     public void save(Cuoco artista) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'save'");

@@ -1,9 +1,14 @@
 package it.uniroma3.siwfood.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import jakarta.persistence.ManyToMany;
+
 
 @Entity
 public class Ingrediente {
@@ -14,6 +19,9 @@ public class Ingrediente {
     private String nome;
     private Long quantita;
     private String URL;
+
+    @ManyToMany(mappedBy = "ingredienti")
+    private List<Ricetta> ricette;
 
     public String getURL() {
         return URL;

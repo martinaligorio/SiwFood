@@ -6,8 +6,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+
 
 @Entity
+@Table(name = "ricetta")
 public class Ricetta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +23,16 @@ public class Ricetta {
     private String nome;
     private String descrizione;
     private List<String> urlimmagine;
+
+    @ManyToMany
+    @JoinTable(
+        name = "ricetta_ingrediente",
+        joinColumns = @JoinColumn(name = "ricetta_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "ingrediente_id", referencedColumnName = "id")
+    )
     private List<Ingrediente> ingredienti;
+
+    @ManyToOne
     private Cuoco cuoco;
     
     public Long getId() {
@@ -43,6 +60,8 @@ public class Ricetta {
         this.urlimmagine = urlimmagine;
     }
    
+    @ManyToOne
+    @JoinColumn(name = "cuoco_id", referencedColumnName = "id")
     public Cuoco getCuoco() {
         return cuoco;
     }

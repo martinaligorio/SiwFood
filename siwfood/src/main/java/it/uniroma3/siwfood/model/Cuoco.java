@@ -1,11 +1,17 @@
 package it.uniroma3.siwfood.model;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "cuoco")
 public class Cuoco {
 
     @Id
@@ -13,8 +19,11 @@ public class Cuoco {
     private Long id;
     private String nome;
     private String cognome;
-    private String dataDiNascita;
+    private LocalDate dataDiNascita;
     private String urlimmagine;
+   
+    @OneToMany(mappedBy="cuoco")
+    private List<Ricetta> ricette;
     
     public String getNome() {
         return nome;
@@ -28,10 +37,10 @@ public class Cuoco {
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
-    public String getDataDiNascita() {
+    public LocalDate getDataDiNascita() {
         return dataDiNascita;
     }
-    public void setDataDiNascita(String dataDiNascita) {
+    public void setDataDiNascita(LocalDate dataDiNascita) {
         this.dataDiNascita = dataDiNascita;
     }
     public String getUrlimmagine() {
@@ -87,6 +96,12 @@ public class Cuoco {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public List<Ricetta> getRicette() {
+        return ricette;
+    }
+    public void setRicette(List<Ricetta> ricette) {
+        this.ricette = ricette;
     }
     
 }
