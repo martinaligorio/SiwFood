@@ -24,7 +24,7 @@ public class RicettaController {
 	}//parametro id, viene convertito in Long e passato come parametro
 	
 	
-	@GetMapping("/ricetta")//senza s
+	@GetMapping("/ricette")//senza s
 	public String showRicette(Model model) {
 		model.addAttribute("ricette", this.ricettaService.findAll());
 		return "ricette.html"; //verificato: qua la s ce va

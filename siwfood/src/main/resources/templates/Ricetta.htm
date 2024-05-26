@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 	<h1>Dettagli Ricetta</h1>
 	<div th:if="${ricetta}">
 		<h1 th:text="${ricetta.nome}">Nome ricetta</h1>
@@ -16,10 +16,10 @@
 		<span><img width="30%" th:src="${ricetta.urlImmagine}" /></span>
 	</div>
 	<tr th:each="ingrediente : ${ricetta.ingredienti}">
-		<td th:text="${ingrediente.key}">Ingrediente</td>
-		<td th:text="${ingrediente.value}">Quantità</td>
+		<td th:text="${ingrediente.nome}">Ingrediente</td>
+		<td th:text="${ingrediente.quantità}">Quantità</td>
 	</tr>
-	<div th:unless="${ricetta}">Non esiste</div>
+	<div th:if="${!ricetta.ingredienti.isEmpty()}">Non esiste</div>
 </body>
 
 </html>

@@ -28,7 +28,7 @@ public class CuocoController {
 	}//parametro id, viene convertito in Long e passato come parametro
 	
 	
-	@GetMapping("/cuoco")//senza s
+	@GetMapping("/cuochi")//senza s (CONTROLLA)
 	public String showCuochi(Model model) {
 		model.addAttribute("cuochi", this.cuocoService.findAll());
 		return "cuochi.html"; //verificato: qua la s ce va
