@@ -17,12 +17,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "ricetta")
 public class Ricetta {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     private String descrizione;
-    private List<String> urlimmagine;
+    private String urlimage;
 
     @ManyToMany
     @JoinTable(
@@ -53,11 +54,11 @@ public class Ricetta {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    public List<String> getUrlimmagine() {
-        return urlimmagine;
+    public String getUrlimage() {
+        return urlimage;
     }
-    public void setUrlimmagine(List<String> urlimmagine) {
-        this.urlimmagine = urlimmagine;
+    public void setUrlimage(String urlimage) {
+        this.urlimage = urlimage;
     }
    
     @ManyToOne
@@ -75,7 +76,7 @@ public class Ricetta {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
-        result = prime * result + ((urlimmagine == null) ? 0 : urlimmagine.hashCode());
+        result = prime * result + ((urlimage == null) ? 0 : urlimage.hashCode());
         result = prime * result + ((ingredienti == null) ? 0 : ingredienti.hashCode());
         result = prime * result + ((cuoco == null) ? 0 : cuoco.hashCode());
         return result;
@@ -104,10 +105,10 @@ public class Ricetta {
                 return false;
         } else if (!descrizione.equals(other.descrizione))
             return false;
-        if (urlimmagine == null) {
-            if (other.urlimmagine != null)
+        if (urlimage == null) {
+            if (other.urlimage != null)
                 return false;
-        } else if (!urlimmagine.equals(other.urlimmagine))
+        } else if (!urlimage.equals(other.urlimage))
             return false;
         if (ingredienti == null) {
             if (other.ingredienti != null)

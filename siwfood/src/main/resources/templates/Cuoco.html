@@ -13,8 +13,7 @@
 		<h1 th:text="${cuoco.nome}">Nome </h1>
         <h1 th:text="${cuoco.cognome}">Cognome </h1>
 		<div>Data di nascita: <span th:text="'(' + ${cuoco.dataDiNascita} + ')'">2000</span></div>
-        <div>Descrizione: <span th:text="'(' + ${cuoco.descrizione} + ')'">2000</span></div>
-		<span><img width="30%" th:src="${cuoco.urlImmagine}" /></span>
+		<div><img  th:src="@{${cuoco.urlimage}}" width="30%"/></div>
 	</div>
 	<div th:unless="${cuoco}">Non esiste</div>
 </body>

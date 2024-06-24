@@ -21,14 +21,14 @@ public class CuocoService {
     public Iterable<Cuoco> findAll() {
         return cuocoRepository.findAll();
     }
-
-    public List<Cuoco> findByName(String nome) {
-        return cuocoRepository.findByNome(nome);
-    }
     
-    public void save(Cuoco artista) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public void save(Cuoco cuoco) {
+        cuocoRepository.save(cuoco);
     }
+
+   // public List<Cuoco> findByRicette(String ricetta) {
+    //    return cuocoRepository.findByRicette(ricetta);
+    //}
+    
 
 }    

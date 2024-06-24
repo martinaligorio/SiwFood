@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.RicettaService;
+
+
 @Controller
 public class RicettaController {
 	
@@ -47,6 +50,15 @@ public class RicettaController {
 		return "redirect:ricetta/"+ricetta.getId();
 	}
 	
-	 
-
+	@GetMapping("/formSearchRicetta")
+	public String formSearchRicetta() {
+		return "formSearchRicetta.html";
+	} 
+	
+	/*@PostMapping("/searchRicetta")
+	public String searchRicetta(Model model, @RequestParam String cuoco) {
+		model.addAttribute("ricette", this.ricettaService.findByCuochi(cuoco));
+		return "foundRicetta.html";
+	}
+*/
 }

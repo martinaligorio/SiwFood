@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.service.CuocoService;
@@ -51,5 +51,16 @@ public class CuocoController {
 		return "redirect:cuoco/"+cuoco.getId();
 	}
 	
-
+	@GetMapping("/formSearchCuoco")
+	public String formSearchCuoco() {
+		return "formSearchCuoco.html";
+	} 
+	
+	/* 
+	@PostMapping("/searchCuoco")
+	public String searchCuoco(Model model, @RequestParam String ricetta) {
+		model.addAttribute("Cuochi", this.cuocoService.findByRicette(ricetta));
+		return "foundCuoco.html";
+	}
+*/
 }

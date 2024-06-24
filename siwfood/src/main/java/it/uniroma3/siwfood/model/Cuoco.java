@@ -3,6 +3,9 @@ package it.uniroma3.siwfood.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,8 +22,11 @@ public class Cuoco {
     private Long id;
     private String nome;
     private String cognome;
+
+    @Column(name="datanascita")
+    @DateTimeFormat(pattern="dd-MM-yyyy")
     private LocalDate dataDiNascita;
-    private String urlimmagine;
+    private String urlimage;
    
     @OneToMany(mappedBy="cuoco")
     private List<Ricetta> ricette;
@@ -44,10 +50,10 @@ public class Cuoco {
         this.dataDiNascita = dataDiNascita;
     }
     public String getUrlimmagine() {
-        return urlimmagine;
+        return urlimage;
     }
-    public void setUrlimmagine(String urlimmagine) {
-        this.urlimmagine = urlimmagine;
+    public void setUrlimmagine(String urlimage) {
+        this.urlimage = urlimage;
     }
     
     @Override
@@ -57,7 +63,7 @@ public class Cuoco {
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
         result = prime * result + ((dataDiNascita == null) ? 0 : dataDiNascita.hashCode());
-        result = prime * result + ((urlimmagine == null) ? 0 : urlimmagine.hashCode());
+        result = prime * result + ((urlimage == null) ? 0 : urlimage.hashCode());
         return result;
     }
     @Override
@@ -84,10 +90,10 @@ public class Cuoco {
                 return false;
         } else if (!dataDiNascita.equals(other.dataDiNascita))
             return false;
-        if (urlimmagine == null) {
-            if (other.urlimmagine != null)
+        if (urlimage == null) {
+            if (other.urlimage != null)
                 return false;
-        } else if (!urlimmagine.equals(other.urlimmagine))
+        } else if (!urlimage.equals(other.urlimage))
             return false;
         return true;
     }
