@@ -11,8 +11,8 @@
 
 	
 	<h1 th:text="${ricetta.nome}">Nome ricetta</h1>
-	<div>Cuoco: <span th:text="'(' + ${ricetta.cuoco} + ')'">2000</span></div>
-	<div>Descrizione: <span th:text="'(' + ${ricetta.descrizione} + ')'">2000</span></div>
+	<div><span th:text="'' + ${ricetta.cuoco.toString()} + ''">Cuoco 2000</span></div>
+	<div> <span th:text="'' + ${ricetta.descrizione} + ''">Descrizione 2000</span></div>
 	<div><img th:src="@{${ricetta.urlimage}}" width="30%"  /></div>
 
 

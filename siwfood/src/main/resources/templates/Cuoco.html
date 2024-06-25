@@ -2,22 +2,19 @@
 <html>
 
 <head>
-	<title>Cuoco</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <title>Cuoco</title>
+    <link rel="stylesheet" href="/css/stile.css" />
 </head>
 
 <body>
-	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
-	<h1>Dettagli </h1>
-	<div th:if="${cuoco}">
-		<h1 th:text="${cuoco.nome}">Nome </h1>
-        <h1 th:text="${cuoco.cognome}">Cognome </h1>
-		<div>Data di nascita: <span th:text="'(' + ${cuoco.dataDiNascita} + ')'">2000</span></div>
-		<div><img  th:src="@{${cuoco.urlimage}}" width="30%"/></div>
-	</div>
-	<div th:unless="${cuoco}">Non esiste</div>
+    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+    <div th:if="${cuoco != null}">
+        <h1 th:text="${cuoco.nome+ ' ' + cuoco.cognome}">Nome Cognome</h1>
+        <div>Data di nascita: <span th:text="'' + ${cuoco.dataDiNascita} + ''">2000</span></div>
+        <div><img th:src="@{${cuoco.urlimage}}" width="30%" /></div>
+    </div>
+    <div th:if="${cuoco == null}">Non esiste</div>
 </body>
 
 </html>
-
-

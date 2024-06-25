@@ -31,6 +31,11 @@ public class Cuoco {
     @OneToMany(mappedBy="cuoco")
     private List<Ricetta> ricette;
     
+    @Override
+    public String toString() {
+        return "Cuoco: " + nome + " " + cognome;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -49,10 +54,10 @@ public class Cuoco {
     public void setDataDiNascita(LocalDate dataDiNascita) {
         this.dataDiNascita = dataDiNascita;
     }
-    public String getUrlimmagine() {
+    public String getUrlimage() {
         return urlimage;
     }
-    public void setUrlimmagine(String urlimage) {
+    public void setUrlimage(String urlimage) {
         this.urlimage = urlimage;
     }
     
