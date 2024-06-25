@@ -51,16 +51,11 @@ public class CuocoController {
 		return "redirect:cuoco/"+cuoco.getId();
 	}
 	
-	@GetMapping("/formSearchCuoco")
-	public String formSearchCuoco() {
-		return "formSearchCuoco.html";
-	} 
 	
-	/* 
-	@PostMapping("/searchCuoco")
-	public String searchCuoco(Model model, @RequestParam String ricetta) {
-		model.addAttribute("Cuochi", this.cuocoService.findByRicette(ricetta));
-		return "foundCuoco.html";
+	@GetMapping("/searchCuoco")
+	public String searchCuoco(Model model, @RequestParam String nome) {
+		model.addAttribute("cuochi", this.cuocoService.findByNome(nome)); 
+        return "cuochi.html"; 
 	}
-*/
+
 }

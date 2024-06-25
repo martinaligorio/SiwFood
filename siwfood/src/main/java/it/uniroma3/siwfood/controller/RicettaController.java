@@ -55,10 +55,10 @@ public class RicettaController {
 		return "formSearchRicetta.html";
 	} 
 	
-	/*@PostMapping("/searchRicetta")
-	public String searchRicetta(Model model, @RequestParam String cuoco) {
-		model.addAttribute("ricette", this.ricettaService.findByCuochi(cuoco));
-		return "foundRicetta.html";
+	@GetMapping("/searchRicetta")
+	public String searchRicetta(Model model, @RequestParam String nome) {
+		model.addAttribute("ricette", this.ricettaService.findByNome(nome)); 
+        return "ricette.html"; 
 	}
-*/
+
 }

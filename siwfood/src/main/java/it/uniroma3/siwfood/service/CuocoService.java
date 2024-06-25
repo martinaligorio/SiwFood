@@ -26,9 +26,9 @@ public class CuocoService {
         cuocoRepository.save(cuoco);
     }
 
-   // public List<Cuoco> findByRicette(String ricetta) {
-    //    return cuocoRepository.findByRicette(ricetta);
-    //}
+    public List<Cuoco> findByNome(String nome) {
+        return cuocoRepository.findByNome(nome);
+    }
     
 
 }    

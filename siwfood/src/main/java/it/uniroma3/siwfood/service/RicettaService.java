@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.repository.RicettaRepository;
 
@@ -22,12 +23,11 @@ public class RicettaService {
         return ricettaRepository.findAll();
     }
 
-   // public List<Ricetta> findByCuochi(String cuoco) {
-//    return ricettaRepository.findByCuochi(cuoco);
-   // }
- 
     public void save(Ricetta ricetta) {
         ricettaRepository.save(ricetta);
     }
 
+    public List<Ricetta> findByNome(String nome) {
+        return ricettaRepository.findByNome(nome);
+    }
 }    
