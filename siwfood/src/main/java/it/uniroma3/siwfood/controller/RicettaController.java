@@ -67,5 +67,11 @@ public class RicettaController {
 	public String getFormSearch() {
 		return "formSearch.html";
 	}
+
+	@PostMapping("/ricetta/delete/{id}")
+    public String deleteRicetta(@PathVariable Long id) {
+        ricettaService.deleteRicettaById(id);
+        return "redirect:/ricette"; // Redirect alla lista delle ricette dopo la cancellazione
+    }
 	
 }

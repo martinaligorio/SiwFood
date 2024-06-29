@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="it">
 <head>
-	<title>Ricetta</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Ricetta</title>
+    <link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
-	<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 
-	
-	<h1 th:text="${ricetta.nome}">Nome ricetta</h1>
-	<div><span th:text="'' + ${ricetta.cuoco.toString()} + ''">Cuoco 2000</span></div>
-	<div> <span th:text="'' + ${ricetta.descrizione} + ''">Descrizione 2000</span></div>
-	<div><img th:src="@{${ricetta.urlimage}}" width="30%"  /></div>
+    <div th:if="${ricetta != null}">
+        <h1 th:text="${ricetta.nome + ' ' + ricetta.cuoco.cognome}">Nome Cognome</h1>
+        <div>Descrizione: <span th:text="${ricetta.descrizione}">Descrizione</span></div>
+        <div><img th:src="@{${ricetta.urlimage}}" width="30%" /></div>
 
-	<div><a href="/formNewIngrediente">Inserisci Ingrediente</a></div>
-
+        <!-- Form per la cancellazione -->
+        <form th:action="@{/ricetta/delete/{id}(id=${ricetta.id})}" method="post">
+            <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
+            <button type="submit">Elimina Ricetta</button>
+        </form>
+    </div>
+    <div th:if="${ricetta == null}">Non esiste</div>
 </body>
-
 </html>
-
-
-
-
-   

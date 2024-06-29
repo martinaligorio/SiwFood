@@ -53,4 +53,9 @@ public class CuocoController {
         return "cuochi.html"; 
 	}
 
+	@PostMapping("/cuoco/delete/{id}")
+    public String deleteCuoco(@PathVariable Long id) {
+        cuocoService.deleteCuocoById(id);
+        return "redirect:/cuochi"; // Redirect alla lista delle ricette dopo la cancellazione
+    }
 }

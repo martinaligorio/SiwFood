@@ -35,4 +35,7 @@ public class RicettaService {
         return ricettaRepository.findByIngredienteNome(nomeIngrediente);
     }
 
+    public void deleteRicettaById(Long id) {
+        ricettaRepository.deleteById(id);
+    }
 }    

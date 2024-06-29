@@ -29,6 +29,10 @@ public class CuocoService {
     public List<Cuoco> findByNome(String nome) {
         return cuocoRepository.findByNome(nome);
     }
+
+    public void deleteCuocoById(Long id) {
+        cuocoRepository.deleteById(id);
+    }
     
 
 }    
