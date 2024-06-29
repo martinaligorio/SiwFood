@@ -22,8 +22,8 @@ public class CuocoService {
         return cuocoRepository.findAll();
     }
     
-    public void save(Cuoco cuoco) {
-        cuocoRepository.save(cuoco);
+    public Cuoco save(Cuoco cuoco) {
+       return cuocoRepository.save(cuoco);
     }
 
     public List<Cuoco> findByNome(String nome) {

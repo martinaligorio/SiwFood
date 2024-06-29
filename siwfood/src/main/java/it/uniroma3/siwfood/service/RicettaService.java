@@ -23,11 +23,16 @@ public class RicettaService {
         return ricettaRepository.findAll();
     }
 
-    public void save(Ricetta ricetta) {
-        ricettaRepository.save(ricetta);
+    public Ricetta save(Ricetta ricetta) {
+        return ricettaRepository.save(ricetta);
     }
 
     public List<Ricetta> findByNome(String nome) {
         return ricettaRepository.findByNome(nome);
     }
+
+    public Iterable<Ricetta> findByIngredienteNome(String nomeIngrediente){
+        return ricettaRepository.findByIngredienteNome(nomeIngrediente);
+    }
+
 }    

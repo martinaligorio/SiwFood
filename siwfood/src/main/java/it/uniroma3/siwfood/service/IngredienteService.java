@@ -20,9 +20,8 @@ public class IngredienteService {
         return ingredienteRepository.findAll();
     }
 
-    public void save(Ingrediente ingrediente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public Ingrediente save(Ingrediente ingrediente) {
+        return ingredienteRepository.save(ingrediente);
     }
 
 }    

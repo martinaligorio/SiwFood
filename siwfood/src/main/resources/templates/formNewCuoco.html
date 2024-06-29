@@ -6,24 +6,24 @@
 </head>
 <body>
 	<div>
-		<a href="/"><img=src"/logo-siwfood.png" width="50%"/></a>
+		<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
 	</div>
 	<h1>Aggiungi un cuoco</h1>
-	<form th:action="@{/cuoco}" method="POST" th:object="${cuoco}">
+	<form action='#' th:action="@{/cuoco}" method="post" th:object="${cuoco}">
 		<div>
 			<span th:text="${messaggioErrore}">Errore</span>
 		</div>
 		<div>
-			nome: <span><input required type="text" th:field="${cuoco.nome}"/></span>
+			nome: <span><input type="text" th:field="*{nome}"/></span>
 		</div>
         <div>
-			cognome: <span><input required type="text" th:field="${cuoco.cognome}"/></span>
+			cognome: <span><input type="text" th:field="*{cognome}"/></span>
 		</div>
 		<div>
-			Anno di nascita: <span><input required type="text" th:field="${cuoco.dataDiNascita}"/></span>
+			Anno di nascita: <span><input type="date" th:field="*{data_nascita}"/></span>
 		</div>
 		<div>
-			URL immagine: <span><input required type="url" th:field="${cuoco.urlImage}"/></span>
+			URL immagine: <span><input type="text" th:field="*{urlimage}"/></span>
 		</div>
 		<div>
 			<span><button type="submit">Conferma</button></span>

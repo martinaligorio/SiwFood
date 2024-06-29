@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cerca</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<div><img src="/images/logo-siwfood.png" width="50%" /></div>
+	<h1>Cerca</h1>
+	<div>
+        <form th:action="@{/searchCuoco}" method="post">
+            <label for="nomeCuoco">Cerca Cuoco:</label>
+            <input type="text" id="nomeCuoco" name="nome" required>
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+	<div>
+        <form th:action="@{/searchRicetta}" method="post">
+            <label for="nomeRicetta">Cerca Ricetta:</label>
+            <input type="text" id="nomeRicetta" name="nome" required>
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+	<div>
+        <form th:action="@{/searchByIngrediente}" method="post">
+            <label for="ingrediente">Cerca Ingrediente:</label>
+            <input type="text" id="ingrediente" name="ingrediente" required>
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

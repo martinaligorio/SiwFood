@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,54 +24,81 @@ public class Cuoco {
     private String nome;
     private String cognome;
 
-    @Column(name="datanascita")
+    @Column(name="data_nascita")
     @DateTimeFormat(pattern="dd-MM-yyyy")
-    private LocalDate dataDiNascita;
+    private LocalDate data_nascita;
     private String urlimage;
    
-    @OneToMany(mappedBy="cuoco")
+    @OneToMany(mappedBy="cuoco",cascade=CascadeType.ALL)
     private List<Ricetta> ricette;
     
-    @Override
-    public String toString() {
-        return "Cuoco: " + nome + " " + cognome;
+    public Cuoco(){
+    
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public String getCognome() {
         return cognome;
     }
+
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
-    public LocalDate getDataDiNascita() {
-        return dataDiNascita;
+
+    public LocalDate getData_nascita() {
+        return data_nascita;
     }
-    public void setDataDiNascita(LocalDate dataDiNascita) {
-        this.dataDiNascita = dataDiNascita;
+
+    public void setData_nascita(LocalDate data_nascita) {
+        this.data_nascita = data_nascita;
     }
+
     public String getUrlimage() {
         return urlimage;
     }
+
     public void setUrlimage(String urlimage) {
         this.urlimage = urlimage;
     }
-    
+
+    public List<Ricetta> getRicette() {
+        return ricette;
+    }
+
+    public void setRicette(List<Ricetta> ricette) {
+        this.ricette = ricette;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuoco: " + nome+ " " + cognome;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
-        result = prime * result + ((dataDiNascita == null) ? 0 : dataDiNascita.hashCode());
-        result = prime * result + ((urlimage == null) ? 0 : urlimage.hashCode());
+        result = prime * result + ((data_nascita == null) ? 0 : data_nascita.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -90,29 +118,15 @@ public class Cuoco {
                 return false;
         } else if (!cognome.equals(other.cognome))
             return false;
-        if (dataDiNascita == null) {
-            if (other.dataDiNascita != null)
+        if (data_nascita == null) {
+            if (other.data_nascita != null)
                 return false;
-        } else if (!dataDiNascita.equals(other.dataDiNascita))
-            return false;
-        if (urlimage == null) {
-            if (other.urlimage != null)
-                return false;
-        } else if (!urlimage.equals(other.urlimage))
+        } else if (!data_nascita.equals(other.data_nascita))
             return false;
         return true;
     }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public List<Ricetta> getRicette() {
-        return ricette;
-    }
-    public void setRicette(List<Ricetta> ricette) {
-        this.ricette = ricette;
-    }
+
     
+  
+
 }

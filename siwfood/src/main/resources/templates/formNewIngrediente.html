@@ -9,19 +9,19 @@
 		<a href="/"><img=src"/logo-siwfood.png" width="50%"/></a>
 	</div>
 	<h1>Aggiungi un ingrediente</h1>
-	<form th:action="@{/ingrediente}" method="POST" th:object="${ingrediente}">
+	<form action='#' th:action="@{/ingrediente}" method="post" th:object="${ingrediente}">
 		<div>
 			<span th:text="${messaggioErrore}">Errore</span>
 		</div>
 		<div>
-			nome: <span><input required type="text" th:field="${ingrediente.nome}"/></span>
+			nome: <span><input type="text" th:field="*{nome}"/></span>
 		</div>
         <div>
-			quantità: <span><input required type="text" th:field="${ingrediente.quantità}"/></span>
+			quantità: <span><input type="text" th:field="*{quantità}"/></span>
 		</div>
 		
 		<div>
-			URL immagine: <span><input required type="url" th:field="${ingrediente.urlImage}"/></span>
+			URL immagine: <span><input  type="text" th:field="*{urlimage}"/></span>
 		</div>
 		<div>
 			<span><button type="submit">Conferma</button></span>

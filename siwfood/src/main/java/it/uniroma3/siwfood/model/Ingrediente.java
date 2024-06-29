@@ -1,13 +1,11 @@
 package it.uniroma3.siwfood.model;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity
@@ -17,18 +15,22 @@ public class Ingrediente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
-    private Long quantita;
-    private String URL;
+    private String quantita;
+    private String urlimage;
 
-    @ManyToMany(mappedBy = "ingredienti")
-    private List<Ricetta> ricette;
+    @ManyToOne
+    @JoinColumn(name = "ricetta_id")
+    private Ricetta ricetta;
 
-    public String getURL() {
-        return URL;
+    public Ingrediente() {}
+
+
+    public String geturlimage() {
+        return urlimage;
     }
 
-    public void setURL(String uRL) {
-        URL = uRL;
+    public void seturlimage(String uRL) {
+     urlimage = uRL;
     }
 
     
@@ -40,11 +42,11 @@ public class Ingrediente {
         this.nome = nome;
     }
 
-    public Long getQuantita() {
+    public String getQuantita() {
         return quantita;
     }
 
-    public void setQuantita(Long quantita) {
+    public void setQuantita(String quantita) {
         this.quantita = quantita;
     }
 

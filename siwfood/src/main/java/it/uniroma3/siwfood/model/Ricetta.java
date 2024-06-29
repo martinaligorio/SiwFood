@@ -2,14 +2,14 @@ package it.uniroma3.siwfood.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -25,16 +25,16 @@ public class Ricetta {
     private String descrizione;
     private String urlimage;
 
-    @ManyToMany
-    @JoinTable(
-        name = "ricetta_ingrediente",
-        joinColumns = @JoinColumn(name = "ricetta_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "ingrediente_id", referencedColumnName = "id")
-    )
+    @OneToMany(mappedBy="ricetta",cascade=CascadeType.ALL)
     private List<Ingrediente> ingredienti;
 
     @ManyToOne
+    @JoinColumn(name = "cuoco_id")
     private Cuoco cuoco;
+    
+    public Ricetta(){
+
+    }
     
     public Long getId() {
         return id;
@@ -69,6 +69,12 @@ public class Ricetta {
     public void setCuoco(Cuoco cuoco) {
         this.cuoco = cuoco;
     }
+
+    @Override
+    public String toString() {
+        return "Ricetta [nome=" + nome + "]";
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

@@ -11,7 +11,7 @@
 
     <div th:if="${cuoco != null}">
         <h1 th:text="${cuoco.nome+ ' ' + cuoco.cognome}">Nome Cognome</h1>
-        <div>Data di nascita: <span th:text="'' + ${cuoco.dataDiNascita} + ''">2000</span></div>
+        <div>Data di nascita: <span th:text="'' + ${cuoco.data_nascita} + ''">2000</span></div>
         <div><img th:src="@{${cuoco.urlimage}}" width="30%" /></div>
     </div>
     <div th:if="${cuoco == null}">Non esiste</div>

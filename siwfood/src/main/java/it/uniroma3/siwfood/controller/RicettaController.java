@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import it.uniroma3.siwfood.model.Ricetta;
+import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
 
 
@@ -18,47 +19,53 @@ import it.uniroma3.siwfood.service.RicettaService;
 public class RicettaController {
 	
 	@Autowired RicettaService ricettaService;
+	@Autowired IngredienteService ingredienteService;
 	
-	//risponde a una GET HTTP che avrÃ  un URL del tipo /movie/1231
-	@GetMapping("/ricetta/{id}")//senza s
+	@GetMapping("/ricetta/{id}")
 	public String getRicetta(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("ricetta", this.ricettaService.findById(id));
 		return "ricetta.html";
-	}//parametro id, viene convertito in Long e passato come parametro
+	}
 	
 	
-	@GetMapping("/ricette")//senza s
+	@GetMapping("/ricette")
 	public String showRicette(Model model) {
 		model.addAttribute("ricette", this.ricettaService.findAll());
-		return "ricette.html"; //verificato: qua la s ce va
+		return "ricette.html";
 		
 	}
-	//ci da la lista di tutti i film
-	//e la inserisce nel modello passato per parametro
-
 	
+	//gestisce la visualizzazione del form
 	@GetMapping("/formNewRicetta")
 	public String formNewRicetta(Model model) {
 		model.addAttribute("ricetta", new Ricetta());
+		model.addAttribute("messaggioErrore", "");
 		return "formNewRicetta.html";
 	}
 	
-	
+	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
 	@PostMapping("/ricetta")
-	public String newRicetta(@ModelAttribute("ricetta") Ricetta ricetta) {
+	public String newRicetta(@ModelAttribute Ricetta ricetta) {
 		this.ricettaService.save(ricetta);
-		return "redirect:ricetta/"+ricetta.getId();
+		return "redirect:/ricetta/"+ ricetta.getId();
 	}
 	
-	@GetMapping("/formSearchRicetta")
-	public String formSearchRicetta() {
-		return "formSearchRicetta.html";
-	} 
-	
-	@GetMapping("/searchRicetta")
+	@PostMapping("/searchRicetta")
 	public String searchRicetta(Model model, @RequestParam String nome) {
 		model.addAttribute("ricette", this.ricettaService.findByNome(nome)); 
         return "ricette.html"; 
 	}
 
+	@PostMapping("/searchByIngrediente")
+    public String searchByIngrediente(Model model, @RequestParam String ingrediente) {
+        model.addAttribute("ricette", this.ricettaService.findByIngredienteNome(ingrediente)); 
+        return "ricette.html"; 
+    }
+
+
+	@GetMapping("/formSearch")
+	public String getFormSearch() {
+		return "formSearch.html";
+	}
+	
 }

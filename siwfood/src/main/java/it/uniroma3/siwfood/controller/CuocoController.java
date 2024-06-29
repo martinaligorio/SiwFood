@@ -19,25 +19,20 @@ public class CuocoController {
 	@Autowired CuocoService cuocoService;
 	
 	
-	
-	//risponde a una GET HTTP che avrÃ  un URL del tipo /movie/1231
 	@GetMapping("/cuoco/{id}")//senza s
 	public String getCuoco(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cuoco", this.cuocoService.findById(id));
 		return "cuoco.html";
-	}//parametro id, viene convertito in Long e passato come parametro
+	}
 	
 	
-	@GetMapping("/cuochi")//senza s (CONTROLLA)
+	@GetMapping("/cuochi")
 	public String showCuochi(Model model) {
 		model.addAttribute("cuochi", this.cuocoService.findAll());
-		return "cuochi.html"; //verificato: qua la s ce va
+		return "cuochi.html"; 
 		
 	}
-	//ci da la lista di tutti i film
-	//e la inserisce nel modello passato per parametro
 
-	
 	@GetMapping("/formNewCuoco")
 	public String formNewCuoco(Model model) {
 		model.addAttribute("cuoco", new Cuoco());
@@ -46,13 +41,13 @@ public class CuocoController {
 	
 	
 	@PostMapping("/cuoco")
-	public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco) {
+	public String newCuoco(@ModelAttribute Cuoco cuoco) {
 		this.cuocoService.save(cuoco);
-		return "redirect:cuoco/"+cuoco.getId();
+		return "redirect:/cuoco/"+cuoco.getId();
 	}
 	
 	
-	@GetMapping("/searchCuoco")
+	@PostMapping("/searchCuoco")
 	public String searchCuoco(Model model, @RequestParam String nome) {
 		model.addAttribute("cuochi", this.cuocoService.findByNome(nome)); 
         return "cuochi.html"; 
