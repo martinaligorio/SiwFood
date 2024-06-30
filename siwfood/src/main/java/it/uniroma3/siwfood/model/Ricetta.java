@@ -21,6 +21,7 @@ public class Ricetta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     private String nome;
     private String descrizione;
     private String urlimage;

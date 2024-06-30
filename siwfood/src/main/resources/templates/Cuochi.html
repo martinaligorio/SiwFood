@@ -10,12 +10,15 @@
 	<div th:if="${cuochi==null||cuochi.isEmpty()}">Non ci sono Cuochi nel sistema</div>
 	<ul>
 	 <li th:each="cuoco:${cuochi}">
-	  <a th:href="@{'/cuoco' + '/' + ${cuoco.id}}" th:text="${cuoco.nome+ ' '+cuoco.cognome}">Nome Cuoco Up! 
+	  <a th:href="@{'/cuochi' + '/' + ${cuoco.id}}" th:text="${cuoco.nome+ ' '+cuoco.cognome}">Nome Cuoco Up! 
 	 		 (2000)</a>
 	 </li>
 	</ul>
 	<div>
-		<a href="/formNewCuoco">Inserisci Cuoco </a>
+		<a href="/cuochi/formNewCuoco">Aggiungi un nuovo Cuoco </a>
 	</div>
+	<div>
+        <a href="/">torna all'home page</a>
+    </div>
 </body>
 </html>

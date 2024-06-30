@@ -9,7 +9,7 @@
 		<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
 	</div>
 	<h1>Aggiungi un cuoco</h1>
-	<form action='#' th:action="@{/cuoco}" method="post" th:object="${cuoco}">
+	<form action='#' th:action="@{/cuochi/savenewcuoco}" method="post" th:object="${cuoco}">
 		<div>
 			<span th:text="${messaggioErrore}">Errore</span>
 		</div>
@@ -29,5 +29,6 @@
 			<span><button type="submit">Conferma</button></span>
 		</div>
 	</form>
+	<a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
 </body>
 </html>

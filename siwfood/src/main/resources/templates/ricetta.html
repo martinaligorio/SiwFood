@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettaglio Ricetta</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
@@ -13,13 +11,35 @@
         <h1 th:text="${ricetta.nome + ' ' + ricetta.cuoco.cognome}">Nome Cognome</h1>
         <div>Descrizione: <span th:text="${ricetta.descrizione}">Descrizione</span></div>
         <div><img th:src="@{${ricetta.urlimage}}" width="30%" /></div>
-
-        <!-- Form per la cancellazione -->
-        <form th:action="@{/ricetta/delete/{id}(id=${ricetta.id})}" method="post">
-            <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
-            <button type="submit">Elimina Ricetta</button>
-        </form>
     </div>
+
+    <div>
+        <h3>Ingredienti</h3>
+        <ul>
+            <li th:each="ingrediente : ${ricetta.ingredienti}">
+                <span th:text="${ingrediente.nome}">Nome Ingrediente</span>: 
+                <span th:text="${ingrediente.quantita}">Quantità Ingrediente</span>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>Cuoco: </h3>
+        <p th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}">Nome Cuoco</p>
+    </div>
+
     <div th:if="${ricetta == null}">Non esiste</div>
+    <div><a href="/ricette/formUpdateRicetta">Modifica Ricetta</a></div>
+
+    <!-- Form per la cancellazione -->
+    <form th:action="@{/ricette/delete/{id}(id=${ricetta.id})}" method="post">
+        <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
+        <button type="submit">Elimina Ricetta</button>
+    </form>
+
+    <div>
+        <a th:href="@{/ricette}">torna alla lista delle ricette</a>    
+    </div>
+    
 </body>
 </html>

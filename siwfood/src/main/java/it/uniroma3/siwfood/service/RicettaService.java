@@ -38,4 +38,5 @@ public class RicettaService {
     public void deleteRicettaById(Long id) {
         ricettaRepository.deleteById(id);
     }
+
 }    

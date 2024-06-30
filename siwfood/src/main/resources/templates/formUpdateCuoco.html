@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiorna Cuoco</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+<body>
+    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+
+    <h1>Aggiorna Cuoco</h1>
+    <form th:action="@{/cuochi/update/{id}(id=${cuoco.id})}" method="post" th:object="${cuoco}">
+        Nome: <input type="text" th:field="*{nome}" /><br/>
+        Cognome: <input type="text" th:field="*{cognome}" /><br/>
+        Data di Nascita: <input type="date" th:field="*{dataNascita}" /><br/>
+        URL Immagine: <input type="text" th:field="*{urlimage}" /><br/>
+        <button type="submit">Aggiorna Cuoco</button>
+    </form>
+    <div>
+        <a th:href="@{/cuochi/{id}}">torna ai dettagli del cuoco</a>    
+    </div>
+</body>
+</html>

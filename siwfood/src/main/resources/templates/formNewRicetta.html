@@ -10,7 +10,7 @@
         <a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
     </div>
     <h1>Aggiungi una ricetta</h1>
-    <form th:action="@{/ricetta}" method="post" th:object="${ricetta}">
+    <form th:action="@{/ricette/save/{cuoco_id}(cuoco_id=${cuoco.id})}" th:object="${ricetta}" method="post">
         <div>
             <span th:text="${messaggioErrore}">Errore</span>
         </div>
@@ -20,10 +20,7 @@
         <div>
             <label>Descrizione:</label> <span><input type="text" th:field="*{descrizione}"/></span>
         </div>
-        <div>
-            <label>Cuoco:</label>  <span><input  type="text" th:field="*{cuoco}"/></span>
-        </div>
-    
+
         <div>
             <label>Immagine:</label>  <span><input  type="text" th:field="*{urlimage}"/></span>
         </div>
@@ -33,5 +30,8 @@
             <span><button type="submit">Conferma</button></span>
         </div>
     </form>
+    <div>
+        <a th:href="@{/cuochi/{id}}">torna ai dettagli del cuoco</a>    
+    </div>
 </body>
 </html>

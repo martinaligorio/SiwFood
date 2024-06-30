@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div>
-		<a href="/"><img=src"/logo-siwfood.png" width="50%"/></a>
+		<a href="/"><img src"/logo-siwfood.png" width="50%"/></a>
 	</div>
 	<h1>Aggiungi un ingrediente</h1>
 	<form action='#' th:action="@{/ingrediente}" method="post" th:object="${ingrediente}">
@@ -27,5 +27,8 @@
 			<span><button type="submit">Conferma</button></span>
 		</div>
 	</form>
+	<div>
+        <a th:href="@{/}">torna alla home page</a>    
+    </div>
 </body>
 </html>
