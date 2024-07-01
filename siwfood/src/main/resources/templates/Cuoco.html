@@ -9,10 +9,13 @@
 <body>
     <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 
-    <div th:if="${cuoco != null}">
+    <div>
+        <img th:if="${cuoco.getFirstImmagine() != null}" th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%"/>
+    </div>
+    
+    <div>
         <h1 th:text="${cuoco.nome+ ' ' + cuoco.cognome}">Nome Cognome</h1>
         <div>Data di nascita: <span th:text="'' + ${cuoco.data_nascita} + ''">2000</span></div>
-        <div><img th:src="@{${cuoco.urlimage}}" width="30%" /></div>
         
         <div>
             <h3>Ricette </h3>
@@ -29,7 +32,7 @@
         
     <div th:if="${cuoco == null}">Non esiste</div>
     
-    <div><a href="/cuochi/update/{id}(id=${cuoco.id})">Aggiorna dati cuoco</a></div>
+    <div><a th:href="/cuochi/update/{id}(id=${cuoco.id})">Aggiorna dati cuoco</a></div>
     
     <div>
         <a th:href="@{/ricette/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    

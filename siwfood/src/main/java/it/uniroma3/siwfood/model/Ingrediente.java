@@ -57,4 +57,24 @@ public class Ingrediente {
     public void setId(Long id) {
         this.id = id;
     }
+
+
+    public String getUrlimage() {
+        return urlimage;
+    }
+
+
+    public void setUrlimage(String urlimage) {
+        this.urlimage = urlimage;
+    }
+
+
+    public Ricetta getRicetta() {
+        return ricetta;
+    }
+
+
+    public void setRicetta(Ricetta ricetta) {
+        this.ricetta = ricetta;
+    }
 }

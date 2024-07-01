@@ -6,24 +6,25 @@
 </head>
 <body>
 	<div>
-		<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
+		<!--<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>-->
 	</div>
 	<h1>Aggiungi un cuoco</h1>
-	<form action='#' th:action="@{/cuochi/savenewcuoco}" method="post" th:object="${cuoco}">
+	<form action="/cuochi/savenewcuoco" method="post" enctype="multipart/form-data" th:object="${cuoco}">
 		<div>
-			<span th:text="${messaggioErrore}">Errore</span>
-		</div>
-		<div>
-			nome: <span><input type="text" th:field="*{nome}"/></span>
+			<label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="*{nome}" required>
 		</div>
         <div>
-			cognome: <span><input type="text" th:field="*{cognome}"/></span>
+			<label for="nome">Cognome:</label>
+            <input type="text" id="cognome" th:field="*{cognome}" required>
 		</div>
 		<div>
-			Anno di nascita: <span><input type="date" th:field="*{data_nascita}"/></span>
+			<label for="dataNascita">Data di Nascita:</label>
+            <input type="date" id="dataNascita" th:field="*{data_nascita}" required>
 		</div>
 		<div>
-			URL immagine: <span><input type="text" th:field="*{urlimage}"/></span>
+			<label for="immagine">Immagine:</label>
+            <input type="file" id="immagine" name="immagine" accept="image/*" required>
 		</div>
 		<div>
 			<span><button type="submit">Conferma</button></span>

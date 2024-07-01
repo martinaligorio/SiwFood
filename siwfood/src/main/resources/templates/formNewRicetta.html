@@ -7,22 +7,25 @@
 
 <body>
     <div>
-        <a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
+       <!--<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>-->
     </div>
     <h1>Aggiungi una ricetta</h1>
-    <form th:action="@{/ricette/save/{cuoco_id}(cuoco_id=${cuoco.id})}" th:object="${ricetta}" method="post">
+    <form action="/ricette/save/{cuoco_id}(cuoco_id=${cuoco.id})" method="post" enctype="multipart/form-data" th:object="${ricetta}" method="post">
         <div>
             <span th:text="${messaggioErrore}">Errore</span>
         </div>
         <div>
-            <label>Nome:</label> <span><input type="text" th:field="*{nome}"/></span>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="*{nome}" required>
         </div>
         <div>
-            <label>Descrizione:</label> <span><input type="text" th:field="*{descrizione}"/></span>
+            <label for="descrizione">Descrizione:</label>
+            <input type="text" id="descrizione" th:field="*{descrizione}" required>
         </div>
 
         <div>
-            <label>Immagine:</label>  <span><input  type="text" th:field="*{urlimage}"/></span>
+            <label for="immagine">Immagine:</label>
+            <input type="file" id="immagine" name="immagine" accept="image/*" required>
         </div>
         
             

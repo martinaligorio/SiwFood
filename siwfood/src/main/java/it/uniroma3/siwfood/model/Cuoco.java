@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,13 +28,22 @@ public class Cuoco {
     @Column(name="data_nascita")
     @DateTimeFormat(pattern="dd-MM-yyyy")
     private LocalDate data_nascita;
-    private String urlimage;
+    
+    @ElementCollection
+    private List<Immagine> immagini;
    
     @OneToMany(mappedBy="cuoco",cascade=CascadeType.ALL)
     private List<Ricetta> ricette;
     
     public Cuoco(){
-    
+    }
+
+    public Cuoco(String nome, String cognome, List<Immagine> immagini, LocalDate data_nascita, List<Ricetta> ricette){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.immagini = immagini;
+        this.data_nascita = data_nascita;
+        this.ricette = ricette;
     }
 
     public Long getId() {
@@ -68,14 +78,7 @@ public class Cuoco {
         this.data_nascita = data_nascita;
     }
 
-    public String getUrlimage() {
-        return urlimage;
-    }
-
-    public void setUrlimage(String urlimage) {
-        this.urlimage = urlimage;
-    }
-
+    
     public List<Ricetta> getRicette() {
         return ricette;
     }
@@ -126,7 +129,27 @@ public class Cuoco {
         return true;
     }
 
+    /*METODI PER LE IMMAGINI*/
+    public Immagine getFirstImmagine(){
+        return this.immagini.get(0);
+    } 
+
+    public List<Immagine> getImmaginiDopoFirst(){
+        try {
+            return this.immagini.subList(1, this.immagini.size());
+        } catch (Exception e) {
+            return null;
+        }
+    }
     
+     //immagine
+     public List<Immagine> getImmagini() {
+        return immagini;
+    }
+
+    public void setImmagini(List<Immagine> immagine) {
+        this.immagini = immagine;
+    }
   
 
 }

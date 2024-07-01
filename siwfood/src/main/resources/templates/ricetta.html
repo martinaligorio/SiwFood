@@ -5,12 +5,15 @@
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
 <body>
-    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+    <!--<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>-->
+
+    <div>
+        <img th:if="${ricetta.getFirstImmagine() != null}" th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%"/>
+    </div>
 
     <div th:if="${ricetta != null}">
         <h1 th:text="${ricetta.nome + ' ' + ricetta.cuoco.cognome}">Nome Cognome</h1>
         <div>Descrizione: <span th:text="${ricetta.descrizione}">Descrizione</span></div>
-        <div><img th:src="@{${ricetta.urlimage}}" width="30%" /></div>
     </div>
 
     <div>
@@ -29,8 +32,10 @@
     </div>
 
     <div th:if="${ricetta == null}">Non esiste</div>
-    <div><a href="/ricette/edit/{id}(id=${ricetta.id})">Modifica Ricetta</a></div>
-
+    <div><a th:href="@{/ricette/formNewIngrediente/{id}(id=${ricetta.id})}"> Aggiungi Ingrediente</a></div>
+    <div>
+        <a th:href="@{/ricette}">torna alla lista delle ricette</a>    
+    </div>
     <!-- Form per la cancellazione -->
     <form th:action="@{/ricette/delete/{id}(id=${ricetta.id})}" method="post">
         <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->

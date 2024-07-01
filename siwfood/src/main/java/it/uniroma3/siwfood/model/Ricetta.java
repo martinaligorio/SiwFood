@@ -3,6 +3,7 @@ package it.uniroma3.siwfood.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +25,9 @@ public class Ricetta {
     
     private String nome;
     private String descrizione;
-    private String urlimage;
+    
+    @ElementCollection
+    private List<Immagine> immagini;
 
     @OneToMany(mappedBy="ricetta",cascade=CascadeType.ALL)
     private List<Ingrediente> ingredienti;
@@ -34,9 +37,16 @@ public class Ricetta {
     private Cuoco cuoco;
     
     public Ricetta(){
-
     }
     
+    public Ricetta(String nome, String descr, List<Immagine> immagini, List<Ingrediente> ingr, Cuoco cuoco){
+        this.nome = nome;
+        this.descrizione = descr;
+        this.immagini = immagini;
+        this.ingredienti = ingr;
+        this.cuoco = cuoco;
+    }
+
     public Long getId() {
         return id;
     }
@@ -54,12 +64,6 @@ public class Ricetta {
     }
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
-    }
-    public String getUrlimage() {
-        return urlimage;
-    }
-    public void setUrlimage(String urlimage) {
-        this.urlimage = urlimage;
     }
    
     @ManyToOne
@@ -82,8 +86,6 @@ public class Ricetta {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
-        result = prime * result + ((urlimage == null) ? 0 : urlimage.hashCode());
         result = prime * result + ((ingredienti == null) ? 0 : ingredienti.hashCode());
         result = prime * result + ((cuoco == null) ? 0 : cuoco.hashCode());
         return result;
@@ -112,11 +114,6 @@ public class Ricetta {
                 return false;
         } else if (!descrizione.equals(other.descrizione))
             return false;
-        if (urlimage == null) {
-            if (other.urlimage != null)
-                return false;
-        } else if (!urlimage.equals(other.urlimage))
-            return false;
         if (ingredienti == null) {
             if (other.ingredienti != null)
                 return false;
@@ -136,5 +133,25 @@ public class Ricetta {
         this.ingredienti = ingredienti;
     }
 
+    public List<Immagine> getImmagini() {
+        return immagini;
+    }
+
+    public void setImmagini(List<Immagine> immagini) {
+        this.immagini = immagini;
+    }
+
+    /*METODI PER LE IMMAGINI*/
+    public Immagine getFirstImmagine(){
+        return this.immagini.get(0);
+    } 
+
+    public List<Immagine> getImmaginiDopoFirst(){
+        try {
+            return this.immagini.subList(1, this.immagini.size());
+        } catch (Exception e) {
+            return null;
+        }
+    }
     
 }

@@ -1,17 +1,26 @@
 package it.uniroma3.siwfood.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
+import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.service.CuocoService;
+import it.uniroma3.siwfood.service.ImmagineService;
+//import it.uniroma3.siwfood.validator.CuocoValidator;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -19,7 +28,8 @@ import it.uniroma3.siwfood.service.CuocoService;
 public class CuocoController {
 	
 	@Autowired CuocoService cuocoService;
-	
+	//@Autowired CuocoValidator cuocoValidator;
+	@Autowired private ImmagineService immagineService;
 	
 	@GetMapping("/{id}")//senza s
 	public String getCuoco(@PathVariable("id") Long id, Model model) {
@@ -43,10 +53,21 @@ public class CuocoController {
 	
 	
 	@PostMapping("/savenewcuoco")
-	public String newCuoco(@ModelAttribute Cuoco cuoco) {
-		cuocoService.save(cuoco);
-		return "redirect:/cuochi/"+cuoco.getId();
-	}
+	public String newCuoco(/*@Valid*/ @ModelAttribute Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine) throws IOException {
+        
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (cuoco.getImmagini() == null) {
+                cuoco.setImmagini(new ArrayList<>());
+            }
+            cuoco.getImmagini().add(img);
+            immagineService.save(img);
+        }
+        cuocoService.save(cuoco);
+        return "redirect:/cuochi/" + cuoco.getId();
+    }
 	
 	
 	@PostMapping("/searchCuoco")

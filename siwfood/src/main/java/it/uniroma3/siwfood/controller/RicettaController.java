@@ -1,20 +1,30 @@
 package it.uniroma3.siwfood.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-
+import it.uniroma3.siwfood.model.Immagine;
+import it.uniroma3.siwfood.model.Ingrediente;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.CuocoService;
+import it.uniroma3.siwfood.service.ImmagineService;
 import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
+//import it.uniroma3.siwfood.validator.IngredienteValidator;
+//import it.uniroma3.siwfood.validator.RicettaValidator;
+import jakarta.validation.Valid;
 ;
 
 
@@ -26,6 +36,9 @@ public class RicettaController {
 	@Autowired RicettaService ricettaService;
 	@Autowired IngredienteService ingredienteService;
 	@Autowired private CuocoService cuocoService;
+	@Autowired private ImmagineService immagineService;
+	//@Autowired RicettaValidator ricettaValidator;
+	////@Autowired IngredienteValidator ingredienteValidator;
 
 	@GetMapping("/{id}")
 	public String getRicetta(@PathVariable("id") Long id, Model model) {
@@ -51,12 +64,46 @@ public class RicettaController {
 	
 	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
 	@PostMapping("/save/{cuoco_id}")
-	public String newRicetta(@PathVariable("cuoco_id") Long id,@ModelAttribute Ricetta ricetta) {
-		ricetta.setCuoco(this.cuocoService.findById(id));	
-		this.ricettaService.save(ricetta);
-			return "redirect:/ricette/"+ ricetta.getId();
-	}
+	public String newRicetta(/*@Valid*/ @PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta, @RequestParam("immagine") MultipartFile immagine) throws IOException {
+        
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (ricetta.getImmagini() == null) {
+                ricetta.setImmagini(new ArrayList<>());
+            }
+            ricetta.getImmagini().add(img);
+            immagineService.save(img);
+        }
+        ricetta.setCuoco(this.cuocoService.findById(id));	
+			this.ricettaService.save(ricetta);
+				return "redirect:/ricette/"+ ricetta.getId();
+    }
 	
+	
+	//gestisce la visualizzazione del form
+	@GetMapping("/formNewIngredente/{id}")
+	public String formNewIngrediente(@PathVariable("id") Long id,Model model) {
+		model.addAttribute("ricetta", this.ricettaService.findById(id));
+		model.addAttribute("ingrediente", new Ingrediente());
+		return "formNewIngrediente.html";
+	}
+
+	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
+	@PostMapping("/saveIngredienti/{id}")
+	public String newIngredienti(/*@Valid*/ @PathVariable("id") Long id, @ModelAttribute Ingrediente ingrediente/* ,BindingResult bindingResult*/) {
+		//this.ingredienteValidator.validate(ingrediente, bindingResult);
+		//if (!bindingResult.hasErrors()) {
+			Ricetta ricetta = this.ricettaService.findById(id);
+			ingrediente.setRicetta(ricetta);
+			this.ingredienteService.save(ingrediente);
+				return "redirect:/ricette/" + ricetta.getId();
+		//} else {
+		//	return "formNewIngrediente.html";
+		//}
+	}
+
 	@PostMapping("/searchRicetta")
 	public String searchRicetta(Model model, @RequestParam String nome) {
 		model.addAttribute("ricette", this.ricettaService.findByNome(nome)); 
