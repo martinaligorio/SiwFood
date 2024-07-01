@@ -61,7 +61,7 @@ public class CuocoController {
         return "redirect:/cuochi"; // Redirect alla lista delle ricette dopo la cancellazione
     }
 
-	@GetMapping("/update/{id}")
+	@GetMapping("/edit/{id}")
 	public String getUpdateForm(@PathVariable Long id, Model model) {
     Cuoco cuoco = cuocoService.findById(id);
     model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello

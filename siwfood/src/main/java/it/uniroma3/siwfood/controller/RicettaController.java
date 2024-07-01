@@ -82,14 +82,14 @@ public class RicettaController {
         return "redirect:/ricette"; // Redirect alla lista delle ricette dopo la cancellazione
     }
 	
-	@GetMapping("/formUpdateRicetta/{id}")  //Mappa le richieste GET all'URL /ricetta/update/{id}.
+	@GetMapping("/edit/{id}")  //Mappa le richieste GET all'URL /ricetta/update/{id}.
     public String getUpdateForm(@PathVariable("id") Long id, Model model) {
     	model.addAttribute("ricetta", this.ricettaService.findById(id)); 
         return "formUpdateRicetta.html"; //Indica il nome del template che Spring deve utilizzare per generare la risposta HTML.
 	}
 
     //@ModelAttribute: Associa i dati del modulo ai parametri del metodo.
-    @PostMapping("/formUpdateRicetta/{id}")
+    @PostMapping("/update/{id}")
     public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setId(id);
 		this.ricettaService.save(ricetta);

@@ -29,7 +29,7 @@
     </div>
 
     <div th:if="${ricetta == null}">Non esiste</div>
-    <div><a href="/ricette/formUpdateRicetta">Modifica Ricetta</a></div>
+    <div><a href="/ricette/edit/{id}(id=${ricetta.id})">Modifica Ricetta</a></div>
 
     <!-- Form per la cancellazione -->
     <form th:action="@{/ricette/delete/{id}(id=${ricetta.id})}" method="post">
