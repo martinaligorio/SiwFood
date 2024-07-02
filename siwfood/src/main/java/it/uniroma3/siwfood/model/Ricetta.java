@@ -142,7 +142,7 @@ public class Ricetta {
     }
 
     /*METODI PER LE IMMAGINI*/
-    public Immagine getFirstImmagine(){
+    public Immagine getFirstImage(){
         return this.immagini.get(0);
     } 
 

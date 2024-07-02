@@ -10,7 +10,7 @@
     <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 
     <h1>Aggiorna Ricetta</h1>
-    <form th:action="@{/ricette/update/{id}(id=${ricetta.id})}" method="post" th:object="${ricetta}">
+    <form th:action="@{/chef/updatericetta/{id}(id=${ricetta.id})}" method="post" th:object="${ricetta}">
         <!-- I campi del modulo per l'aggiornamento della ricetta -->
         Nome: <input type="text" th:field="*{nome}" /><br/>
         Descrizione: <textarea th:field="*{descrizione}"></textarea><br/>

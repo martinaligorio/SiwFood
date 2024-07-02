@@ -9,7 +9,7 @@
 		<!--<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>-->
 	</div>
 	<h1>Aggiungi un cuoco</h1>
-	<form action="/cuochi/savenewcuoco" method="post" enctype="multipart/form-data" th:object="${cuoco}">
+	<form action="/admin/savenewcuoco" method="post" enctype="multipart/form-data" th:object="${cuoco}">
 		<div>
 			<label for="nome">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}" required>

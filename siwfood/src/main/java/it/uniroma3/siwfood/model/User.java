@@ -2,7 +2,10 @@ package it.uniroma3.siwfood.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "users")
@@ -14,9 +17,30 @@ public class User {
 
     private String name;
 
+    @Column(name="data_nascita")
+    @DateTimeFormat(pattern="dd-MM-yyyy")
+    private LocalDate data_nascita;
+    
+    public LocalDate getData_nascita() {
+        return data_nascita;
+    }
+
+    public void setData_nascita(LocalDate data_nascita) {
+        this.data_nascita = data_nascita;
+    }
 
     private String surname;
 
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Cuoco cuoco;
+
+    public Cuoco getCuoco() {
+        return cuoco;
+    }
+
+    public void setCuoco(Cuoco cuoco) {
+        this.cuoco = cuoco;
+    }
 
     public long getId() {
         return id;
@@ -54,4 +78,6 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, name, surname);
     }
+
+
 }

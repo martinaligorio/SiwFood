@@ -8,7 +8,7 @@
     <!--<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>-->
 
     <div>
-        <img th:if="${ricetta.getFirstImmagine() != null}" th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%"/>
+        <img th:if="${ricetta.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImage().getBase64()}" width="30%"/>
     </div>
 
     <div th:if="${ricetta != null}">
@@ -32,12 +32,12 @@
     </div>
 
     <div th:if="${ricetta == null}">Non esiste</div>
-    <div><a th:href="@{/ricette/formNewIngrediente/{id}(id=${ricetta.id})}"> Aggiungi Ingrediente</a></div>
+    <div><a th:href="@{/chef/formNewIngrediente/{id}(id=${ricetta.id})}"> Aggiungi Ingrediente</a></div>
     <div>
         <a th:href="@{/ricette}">torna alla lista delle ricette</a>    
     </div>
     <!-- Form per la cancellazione -->
-    <form th:action="@{/ricette/delete/{id}(id=${ricetta.id})}" method="post">
+    <form th:action="@{/chef/deletericetta/{id}(id=${ricetta.id})}" method="post">
         <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
         <button type="submit">Elimina Ricetta</button>
     </form>

@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -130,7 +131,7 @@ public class Cuoco {
     }
 
     /*METODI PER LE IMMAGINI*/
-    public Immagine getFirstImmagine(){
+    public Immagine getFirstImage(){
         return this.immagini.get(0);
     } 
 

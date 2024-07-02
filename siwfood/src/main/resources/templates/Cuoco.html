@@ -8,9 +8,9 @@
 
 <body>
     <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
-
-    <div>
-        <img th:if="${cuoco.getFirstImmagine() != null}" th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%"/>
+    
+    <div th:object="${cuoco}">
+        <img th:if="${cuoco.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImage().getBase64()}" width="30%"/>
     </div>
     
     <div>
@@ -31,21 +31,22 @@
     </div>
         
     <div th:if="${cuoco == null}">Non esiste</div>
-    
-    <div><a th:href="/cuochi/update/{id}(id=${cuoco.id})">Aggiorna dati cuoco</a></div>
-    
+   
     <div>
-        <a th:href="@{/ricette/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
+        <a th:href="@{/cuochi}">torna alla lista dei cuochi</a>    
     </div>
 
-    <form th:action="@{/cuochi/delete/{id}(id=${cuoco.id})}" method="post">
+    <div><a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a></div>
+    
+    <div>
+        <a th:href="@{/chef/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
+    </div>
+
+    <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post">
         <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
         <button type="submit">Elimina Cuoco</button>
     </form>
 
-    <div>
-        <a th:href="@{/cuochi}">torna alla lista dei cuochi</a>    
-    </div>
 </body>
 
 </html>

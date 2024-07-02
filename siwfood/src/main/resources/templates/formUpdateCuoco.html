@@ -10,7 +10,7 @@
     <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 
     <h1>Aggiorna Cuoco</h1>
-    <form th:action="@{/cuochi/update/{id}(id=${cuoco.id})}" method="post" th:object="${cuoco}">
+    <form th:action="@{/admin/updatecuoco/{id}(id=${cuoco.id})}" method="post" th:object="${cuoco}">
         Nome: <input type="text" th:field="*{nome}" /><br/>
         Cognome: <input type="text" th:field="*{cognome}" /><br/>
         Data di Nascita: <input type="date" th:field="*{dataNascita}" /><br/>

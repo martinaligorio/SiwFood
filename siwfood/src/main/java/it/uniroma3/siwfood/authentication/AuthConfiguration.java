@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 @Configuration
 @EnableWebSecurity
 public class AuthConfiguration{
@@ -48,19 +47,15 @@ public class AuthConfiguration{
                 // AUTORIZZAZIONE: qui definiamo chi può accedere a cosa
                 .authorizeHttpRequests( authorize -> authorize
                         // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-                        .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/css/**", "/images/**", "favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/css/**", "/images/**", "favicon.ico","/cuochi/**","/ricette/**","/searchRicetta","/searchCuoco","/searchByIngrediente","/formSearch").permitAll()
                         // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
-                        .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
-                        // utenti occasionali possono accedere a informazioni sulle ricette e sui cuochi
-                        .requestMatchers(HttpMethod.GET, "/ricette/**", "/cuochi/**").permitAll()
-                        // utenti registrati (cuochi) possono aggiungere nuovi ingredienti e nuove ricette
-                        .requestMatchers(HttpMethod.POST, "/ingredienti/**", "/ricette/**").hasAnyAuthority("CHEF_ROLE")
-                         // utenti registrati (cuochi) possono modificare e cancellare le proprie ricette
-                        .requestMatchers(HttpMethod.PUT, "/ricette/**").hasAnyAuthority("CHEF_ROLE")
-                        .requestMatchers(HttpMethod.DELETE, "/ricette/**").hasAnyAuthority("CHEF_ROLE")
+                        .requestMatchers(HttpMethod.POST, "/register", "/login","/cuochi/**","/ricette/**","/searchRicetta","/searchCuoco","/searchByIngrediente","/formSearch").permitAll()
+                         // utenti registrati (cuochi) possono aggiungere nuovi ingredienti e nuove ricette e modificare e cancellare le proprie ricette
+                        .requestMatchers(HttpMethod.POST,"/chef/**").hasAnyAuthority("CHEF","ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/chef/**").hasAnyAuthority("CHEF","ADMIN")
                         // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
-                        .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("ADMIN_ROLE")
-                        .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ADMIN_ROLE")
+                        .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ADMIN")
                         // tutti gli utenti autenticati possono accere alle pag
                         .anyRequest().authenticated())
                         

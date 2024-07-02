@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.Ingrediente;
 import it.uniroma3.siwfood.model.Ricetta;
@@ -30,7 +31,6 @@ import jakarta.validation.Valid;
 
 
 @Controller
-@RequestMapping("/ricette")
 public class RicettaController {
 	
 	@Autowired RicettaService ricettaService;
@@ -40,14 +40,14 @@ public class RicettaController {
 	//@Autowired RicettaValidator ricettaValidator;
 	////@Autowired IngredienteValidator ingredienteValidator;
 
-	@GetMapping("/{id}")
+	@GetMapping("/ricette/{id}")
 	public String getRicetta(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("ricetta", this.ricettaService.findById(id));
 		return "ricetta.html";
 	}
 	
 	
-	@GetMapping
+	@GetMapping("/ricette")
 	public String showRicette(Model model) {
 		model.addAttribute("ricette", this.ricettaService.findAll());
 		return "ricette.html";
@@ -55,7 +55,7 @@ public class RicettaController {
 	}
 	
 	//gestisce la visualizzazione del form
-	@GetMapping("/formNewRicetta/{cuoco_id}")
+	@GetMapping("/chef/formNewRicetta/{cuoco_id}")
 	public String formNewRicetta(@PathVariable("cuoco_id") Long id,Model model) {
 		model.addAttribute("cuoco", this.cuocoService.findById(id));
 		model.addAttribute("ricetta", new Ricetta());
@@ -63,7 +63,7 @@ public class RicettaController {
 	}
 	
 	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
-	@PostMapping("/save/{cuoco_id}")
+	@PostMapping("/chef/savericetta/{cuoco_id}")
 	public String newRicetta(/*@Valid*/ @PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta, @RequestParam("immagine") MultipartFile immagine) throws IOException {
         
         if (!immagine.isEmpty()) {
@@ -76,14 +76,15 @@ public class RicettaController {
             ricetta.getImmagini().add(img);
             immagineService.save(img);
         }
-        ricetta.setCuoco(this.cuocoService.findById(id));	
-			this.ricettaService.save(ricetta);
-				return "redirect:/ricette/"+ ricetta.getId();
+		Cuoco cuoco =this.cuocoService.findById(id);
+        ricetta.setCuoco(cuoco);	
+		this.ricettaService.save(ricetta);
+		return "redirect:/cuochi/"+ cuoco.getId();
     }
 	
 	
 	//gestisce la visualizzazione del form
-	@GetMapping("/formNewIngredente/{id}")
+	@GetMapping("/chef/formNewIngredente/{id}")
 	public String formNewIngrediente(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("ricetta", this.ricettaService.findById(id));
 		model.addAttribute("ingrediente", new Ingrediente());
@@ -91,7 +92,7 @@ public class RicettaController {
 	}
 
 	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
-	@PostMapping("/saveIngredienti/{id}")
+	@PostMapping("/chef/saveIngredienti/{id}")
 	public String newIngredienti(/*@Valid*/ @PathVariable("id") Long id, @ModelAttribute Ingrediente ingrediente/* ,BindingResult bindingResult*/) {
 		//this.ingredienteValidator.validate(ingrediente, bindingResult);
 		//if (!bindingResult.hasErrors()) {
@@ -123,20 +124,20 @@ public class RicettaController {
 	}
 
 	//@PathVariable Estrae variabili di percorso dall'URL della richiesta.
-	@PostMapping("/delete/{id}")
+	@PostMapping("/chef/deletericetta/{id}")
     public String deleteRicetta(@PathVariable Long id) {
         ricettaService.deleteRicettaById(id);
         return "redirect:/ricette"; // Redirect alla lista delle ricette dopo la cancellazione
     }
 	
-	@GetMapping("/edit/{id}")  //Mappa le richieste GET all'URL /ricetta/update/{id}.
+	@GetMapping("/chef/editricetta/{id}")  //Mappa le richieste GET all'URL /ricetta/update/{id}.
     public String getUpdateForm(@PathVariable("id") Long id, Model model) {
     	model.addAttribute("ricetta", this.ricettaService.findById(id)); 
         return "formUpdateRicetta.html"; //Indica il nome del template che Spring deve utilizzare per generare la risposta HTML.
 	}
 
     //@ModelAttribute: Associa i dati del modulo ai parametri del metodo.
-    @PostMapping("/update/{id}")
+    @PostMapping("/chef/updatericetta/{id}")
     public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setId(id);
 		this.ricettaService.save(ricetta);

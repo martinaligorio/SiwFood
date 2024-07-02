@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Register</h1>
-<form th:action="@{/register}" method="post">
+<form th:action="@{/register}" method="post" enctype="multipart/form-data" th:object="${cuoco}">
     <div>
         <label for="username">Username</label>
         <input type="text" th:field="${credentials.username}">
@@ -21,6 +21,15 @@
     <div>
         <label for="cognome">Cognome</label>
         <input type="text" th:field="${user.surname}">
+    </div>
+
+    <div>
+        <label for="data_nascita">Data di nascita</label>
+        <input type="date" th:field="${user.data_nascita}">
+    </div>
+    <div>
+        <label for="immagine">Immagine:</label>
+        <input type="file" id="immagine" name="immagine" accept="image/*" required>
     </div>
     <div>
         <button type="submit">Register</button>

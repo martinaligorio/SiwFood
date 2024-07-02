@@ -20,39 +20,38 @@ import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
 //import it.uniroma3.siwfood.validator.CuocoValidator;
-import jakarta.validation.Valid;
+
 
 
 @Controller
-@RequestMapping("/cuochi")
 public class CuocoController {
 	
 	@Autowired CuocoService cuocoService;
 	//@Autowired CuocoValidator cuocoValidator;
 	@Autowired private ImmagineService immagineService;
 	
-	@GetMapping("/{id}")//senza s
+	@GetMapping("/cuochi/{id}")//senza s
 	public String getCuoco(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cuoco", this.cuocoService.findById(id));
 		return "cuoco.html";
 	}
 	
 	
-	@GetMapping
+	@GetMapping("/cuochi")
 	public String showCuochi(Model model) {
 		model.addAttribute("cuochi", this.cuocoService.findAll());
 		return "cuochi.html"; 
 		
 	}
 
-	@GetMapping("/formNewCuoco")
+	@GetMapping("/admin/formNewCuoco")
 	public String formNewCuoco(Model model) {
 		model.addAttribute("cuoco", new Cuoco());
 		return "formNewCuoco.html";
 	}
 	
 	
-	@PostMapping("/savenewcuoco")
+	@PostMapping("/admin/savenewcuoco")
 	public String newCuoco(/*@Valid*/ @ModelAttribute Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine) throws IOException {
         
         if (!immagine.isEmpty()) {
@@ -76,20 +75,20 @@ public class CuocoController {
         return "cuochi.html"; 
 	}
 
-	@PostMapping("/delete/{id}")
+	@PostMapping("/admin/deletecuoco/{id}")
     public String deleteCuoco(@PathVariable Long id) {
         cuocoService.deleteCuocoById(id);
         return "redirect:/cuochi"; // Redirect alla lista delle ricette dopo la cancellazione
     }
 
-	@GetMapping("/edit/{id}")
+	@GetMapping("/admin/editcuoco/{id}")
 	public String getUpdateForm(@PathVariable Long id, Model model) {
     Cuoco cuoco = cuocoService.findById(id);
     model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello
     return "formUpdateCuoco.html"; // Ritorna il nome del template da renderizzare
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/admin/updatecuoco/{id}")
 	public String updateCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco) {
     	cuoco.setId(id); // Imposta l'ID sulla cuoco per l'aggiornamento
     	this.cuocoService.save(cuoco); // Salva il cuoco aggiornato
