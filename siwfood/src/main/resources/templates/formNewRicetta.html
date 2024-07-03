@@ -7,7 +7,7 @@
 
 <body>
     <div>
-       <!--<a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>-->
+       <a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
     </div>
     <h1>Aggiungi una ricetta</h1>
     <form th:action="@{/chef/savericetta/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${ricetta}" method="post" >

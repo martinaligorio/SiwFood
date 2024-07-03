@@ -10,13 +10,21 @@
     <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 
     <h1>Aggiorna Ricetta</h1>
-    <form th:action="@{/chef/updatericetta/{id}(id=${ricetta.id})}" method="post" th:object="${ricetta}">
+    <form th:action="@{/chef/updatericetta/{id}(id=${ricetta.id})}" enctype="multipart/form-data" method="post" th:object="${ricetta}">
         <!-- I campi del modulo per l'aggiornamento della ricetta -->
-        Nome: <input type="text" th:field="*{nome}" /><br/>
-        Descrizione: <textarea th:field="*{descrizione}"></textarea><br/>
-        URL Immagine: <input type="text" th:field="*{urlimage}" /><br/>
-        
-        <input type="hidden" th:value="${ricetta.cuoco.id}" name="cuocoId" />
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="*{nome}" required>
+        </div>
+        <div>
+            <label for="descrizione">Descrizione:</label>
+            <input type="text" id="descrizione" th:field="*{descrizione}" required>
+        </div>
+
+        <div>
+            <label for="immagine">Immagine:</label>
+            <input type="file" id="immagine" name="immagine" accept="image/*" required>
+        </div>
         <button type="submit">Aggiorna Ricetta</button>
     </form>
     <div>

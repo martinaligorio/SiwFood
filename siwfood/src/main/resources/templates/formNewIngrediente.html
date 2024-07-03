@@ -8,7 +8,7 @@
         <a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
     </div>
     <h1>Nuovo Ingrediente</h1>
-    <form th:action="@{/chef/saveIngredienti/{id}(id=${ricetta.id})}" th:object="${ingrediente}" method="post">
+    <form th:action="@{/chef/saveIngredienti/{ricetta_id}(ricetta_id=${ricetta.id})}" th:object="${ingrediente}" method="post">
         <div>
             <label>Nome:</label> <span><input type="text" th:field="*{nome}"/></span>
         </div>

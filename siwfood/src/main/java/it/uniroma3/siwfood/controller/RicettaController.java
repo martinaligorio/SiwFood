@@ -79,27 +79,27 @@ public class RicettaController {
 		Cuoco cuoco =this.cuocoService.findById(id);
         ricetta.setCuoco(cuoco);	
 		this.ricettaService.save(ricetta);
-		return "redirect:/cuochi/"+ cuoco.getId();
+		return "redirect:/ricette/"+ ricetta.getId();
     }
 	
 	
 	//gestisce la visualizzazione del form
-	@GetMapping("/chef/formNewIngredente/{id}")
-	public String formNewIngrediente(@PathVariable("id") Long id,Model model) {
+	@GetMapping("/chef/formNewIngrediente/{ricetta_id}")
+	public String formNewIngrediente(@PathVariable("ricetta_id") Long id,Model model) {
 		model.addAttribute("ricetta", this.ricettaService.findById(id));
 		model.addAttribute("ingrediente", new Ingrediente());
 		return "formNewIngrediente.html";
 	}
 
 	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
-	@PostMapping("/chef/saveIngredienti/{id}")
-	public String newIngredienti(/*@Valid*/ @PathVariable("id") Long id, @ModelAttribute Ingrediente ingrediente/* ,BindingResult bindingResult*/) {
+	@PostMapping("/chef/saveIngredienti/{ricetta_id}")
+	public String newIngredienti(/*@Valid*/ @PathVariable("ricetta_id") Long id, @ModelAttribute Ingrediente ingrediente/* ,BindingResult bindingResult*/) {
 		//this.ingredienteValidator.validate(ingrediente, bindingResult);
 		//if (!bindingResult.hasErrors()) {
 			Ricetta ricetta = this.ricettaService.findById(id);
 			ingrediente.setRicetta(ricetta);
 			this.ingredienteService.save(ingrediente);
-				return "redirect:/ricette/" + ricetta.getId();
+			return "redirect:/ricette/" + ricetta.getId();
 		//} else {
 		//	return "formNewIngrediente.html";
 		//}

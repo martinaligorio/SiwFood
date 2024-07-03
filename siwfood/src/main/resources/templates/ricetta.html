@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
 <body>
-    <!--<div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>-->
+    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
 
     <div>
         <img th:if="${ricetta.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImage().getBase64()}" width="30%"/>
@@ -32,7 +32,9 @@
     </div>
 
     <div th:if="${ricetta == null}">Non esiste</div>
-    <div><a th:href="@{/chef/formNewIngrediente/{id}(id=${ricetta.id})}"> Aggiungi Ingrediente</a></div>
+    <div><a th:href="@{/chef/formNewIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}"> Aggiungi Ingrediente</a></div>
+    <div><a th:href="@{/chef/editricetta/{id}(id=${ricetta.id})}"> Aggiorna Ricetta</a></div>
+   
     <div>
         <a th:href="@{/ricette}">torna alla lista delle ricette</a>    
     </div>
