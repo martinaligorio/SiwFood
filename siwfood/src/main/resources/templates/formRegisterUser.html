@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | SiwMovie</title>
+    <link rel="stylesheet" href="/css/stile2.css">
 </head>
 <body>
-<h1>Register</h1>
-<form th:action="@{/register}" method="post" enctype="multipart/form-data" th:object="${cuoco}">
-    <div>
+  <div class="wrapper">
+    <form th:action="@{/register}" method="post" enctype="multipart/form-data" th:object="${cuoco}">
+      <h2>Register</h2>
+      <div class="input-field">
+        <input type="text" th:field="${credentials.username}" required>
         <label for="username">Username</label>
-        <input type="text" th:field="${credentials.username}">
-    </div>
-    <div>
+      </div>
+      <div class="input-field">
+        <input type="password" th:field="${credentials.password}" required>
         <label for="password">Password</label>
-        <input type="password" th:field="${credentials.password}">
-    </div>
-    <div>
+      </div>
+      <div class="input-field">
+        <input type="text" th:field="${user.name}" required>
         <label for="nome">Nome</label>
-        <input type="text" th:field="${user.name}">
-    </div>
-    <div>
+      </div>
+      <div class="input-field">
+        <input type="text" th:field="${user.surname}" required>
         <label for="cognome">Cognome</label>
-        <input type="text" th:field="${user.surname}">
-    </div>
-
-    <div>
+      </div>
+      <div class="input-field">
+        <input type="date" th:field="${user.data_nascita}" required>
         <label for="data_nascita">Data di nascita</label>
-        <input type="date" th:field="${user.data_nascita}">
-    </div>
-    <div>
-        <label for="immagine">Immagine:</label>
+      </div>
+      <div class="input-field">
         <input type="file" id="immagine" name="immagine" accept="image/*" required>
-    </div>
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
+        <label for="immagine">Immagine</label>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
 </body>
 </html>

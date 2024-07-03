@@ -1,33 +1,121 @@
-body { 
-    font-family: "Geneva";
-    color:dimgrey;
+/*@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
-a { 
-	text-decoration: none; 
-    color: darkgrey;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  background-color: #000;
+  color: #fff;
+  position: relative;
 }
 
-a:hover { 
-	text-decoration: underline; 
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("/images/logo-siwfood.png") center center, #000;
+  background-size: 50%;
+  opacity: 0.1;
+  z-index: 0;
 }
 
-label {
-	width: 8em;
-	display: inline-block;
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-header {
-  background-color: rgb(98, 192, 144);
-  color: white;
-  height: 1.5em;
-  margin-bottom: 0.5em;
-  padding: 0.2em;
-  text-align: right; 
+.logo {
+  width: 50%;
+  max-width: 200px;
+  position: relative; 
+  left: 10%;
 }
 
-header a { 
-	text-decoration: none; 
-    color: white;
-    font-size: 0.6em;
+.wrapper {
+  width: 90%;
+  max-width: 800px;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.message {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.ricette-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ricetta-item {
+  margin: 10px 0;
+}
+
+.ricetta-item a {
+  color: #efefef;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.ricetta-item a:hover {
+  text-decoration: underline;
+}
+
+.navigation {
+  margin-top: 20px;
+}
+
+.navigation a {
+  color: #efefef;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.navigation a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 30px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+  margin-top: 20px;
+}
+
+button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
 }
