@@ -7,18 +7,40 @@
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
 <body>
-    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo-siwfood.png" class="logo" alt="Logo"/></a>
+    </div>
 
-    <h1>Aggiorna Cuoco</h1>
-    <form th:action="@{/admin/updatecuoco/{id}(id=${cuoco.id})}" method="post" th:object="${cuoco}">
-        Nome: <input type="text" th:field="*{nome}" /><br/>
-        Cognome: <input type="text" th:field="*{cognome}" /><br/>
-        Data di Nascita: <input type="date" th:field="*{dataNascita}" /><br/>
-        URL Immagine: <input type="text" th:field="*{urlimage}" /><br/>
-        <button type="submit">Aggiorna Cuoco</button>
-    </form>
-    <div>
-        <a th:href="@{/cuochi/{id}}">torna ai dettagli del cuoco</a>    
+    <div class="wrapper">
+        <h1>Aggiorna Cuoco</h1>
+
+        <form th:action="@{/admin/updatecuoco/{id}(id=${cuoco.id})}" method="post" th:object="${cuoco}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cognome">Cognome:</label>
+                <input type="text" id="cognome" th:field="*{cognome}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dataNascita">Data di Nascita:</label>
+                <input type="date" id="dataNascita" th:field="*{data_nascita}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="immagine">Immagine:</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*">
+            </div>
+
+            <button type="submit" class="submit-button">Aggiorna Cuoco</button>
+        </form>
+
+        <div class="navigation">
+            <a th:href="@{/cuochi/{id}(id=${cuoco.id})}">Torna ai dettagli del cuoco</a>
+        </div>
     </div>
 </body>
 </html>

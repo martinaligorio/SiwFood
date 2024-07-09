@@ -1,40 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>New Ricetta</title>
+    <meta charset="UTF-8">
+    <title>Nuova Ricetta</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
-    <div>
-       <a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a>
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo-siwfood.png" class="logo" /></a>
     </div>
-    <h1>Aggiungi una ricetta</h1>
-    <form th:action="@{/chef/savericetta/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${ricetta}" method="post" >
-        <div>
-            <span th:text="${messaggioErrore}">Errore</span>
-        </div>
-        <div>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" th:field="*{nome}" required>
-        </div>
-        <div>
-            <label for="descrizione">Descrizione:</label>
-            <input type="text" id="descrizione" th:field="*{descrizione}" required>
-        </div>
-
-        <div>
-            <label for="immagine">Immagine:</label>
-            <input type="file" id="immagine" name="immagine" accept="image/*" required>
-        </div>
+    
+    <div class="wrapper">
+        <h1>Aggiungi una Ricetta</h1>
         
+        <form th:action="@{/chef/savericetta/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${ricetta}" method="post">
+            <div class="message" th:if="${messaggioErrore != null}">
+                <span th:text="${messaggioErrore}">Errore</span>
+            </div>
             
-        <div>
-            <span><button type="submit">Conferma</button></span>
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="descrizione">Descrizione:</label>
+                <input type="text" id="descrizione" th:field="*{descrizione}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="immagine">Immagine:</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*" required />
+            </div>
+            
+            <div class="form-group">
+                <button type="submit">Conferma</button>
+            </div>
+        </form>
+        
+        <div class="navigation">
+            <a th:href="@{/cuochi/{id}(id=${cuoco.id})}">Torna ai dettagli del cuoco</a>    
         </div>
-    </form>
-    <div>
-        <a th:href="@{/cuochi/{id}}">torna ai dettagli del cuoco</a>    
     </div>
 </body>
 </html>

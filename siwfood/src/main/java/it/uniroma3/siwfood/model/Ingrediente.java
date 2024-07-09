@@ -1,5 +1,8 @@
 package it.uniroma3.siwfood.model;
 
+import java.util.List;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,24 +19,25 @@ public class Ingrediente {
     private Long id;
     private String nome;
     private String quantita;
-    private String urlimage;
+    
+    @ElementCollection
+    private List<Immagine> immagini;
+
 
     @ManyToOne
     @JoinColumn(name = "ricetta_id")
     private Ricetta ricetta;
 
-    public Ingrediente() {}
-
-
-    public String geturlimage() {
-        return urlimage;
+    public Ingrediente() {
     }
 
-    public void seturlimage(String uRL) {
-     urlimage = uRL;
+    public Ingrediente(String nome,String quantita,List<Immagine> immagini,Ricetta ricetta){
+        this.nome = nome;
+        this.quantita = quantita;
+        this.immagini = immagini;
+        this.ricetta = ricetta;
     }
 
-    
     public String getNome() {
         return nome;
     }
@@ -59,16 +63,6 @@ public class Ingrediente {
     }
 
 
-    public String getUrlimage() {
-        return urlimage;
-    }
-
-
-    public void setUrlimage(String urlimage) {
-        this.urlimage = urlimage;
-    }
-
-
     public Ricetta getRicetta() {
         return ricetta;
     }
@@ -76,5 +70,26 @@ public class Ingrediente {
 
     public void setRicetta(Ricetta ricetta) {
         this.ricetta = ricetta;
+    }
+
+    public List<Immagine> getImmagini() {
+        return immagini;
+    }
+
+    public void setImmagini(List<Immagine> immagini) {
+        this.immagini = immagini;
+    }
+    
+    /*METODI PER LE IMMAGINI*/
+    public Immagine getFirstImage(){
+        return this.immagini.get(0);
+    } 
+
+    public List<Immagine> getImmaginiDopoFirst(){
+        try {
+            return this.immagini.subList(1, this.immagini.size());
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

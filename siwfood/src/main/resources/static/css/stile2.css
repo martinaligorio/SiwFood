@@ -32,7 +32,7 @@ body::before {
   padding: 40px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(8px);
 }
 

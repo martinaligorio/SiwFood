@@ -34,5 +34,8 @@ public class CuocoService {
         cuocoRepository.deleteById(id);
     }
     
+    public Cuoco findbyNomeCognome(String nome, String cognome) {
+        return cuocoRepository.findByNomeAndCognome(nome, cognome);
+    }
 
 }    

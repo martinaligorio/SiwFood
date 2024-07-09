@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
+import it.uniroma3.siwfood.model.User;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
 //import it.uniroma3.siwfood.validator.CuocoValidator;
@@ -24,7 +25,7 @@ import it.uniroma3.siwfood.service.ImmagineService;
 
 
 @Controller
-public class CuocoController {
+public class CuocoController extends GlobalController{
 	
 	@Autowired CuocoService cuocoService;
 	//@Autowired CuocoValidator cuocoValidator;
@@ -46,6 +47,9 @@ public class CuocoController {
 
 	@GetMapping("/admin/formNewCuoco")
 	public String formNewCuoco(Model model) {
+		if (!getCredentials().isAdmin()) {
+            return "redirect:/error";
+        }
 		model.addAttribute("cuoco", new Cuoco());
 		return "formNewCuoco.html";
 	}
@@ -77,6 +81,9 @@ public class CuocoController {
 
 	@PostMapping("/admin/deletecuoco/{id}")
     public String deleteCuoco(@PathVariable Long id) {
+		if (!getCredentials().isAdmin()) {
+            return "redirect:/error";
+        }
         cuocoService.deleteCuocoById(id);
         return "redirect:/cuochi"; // Redirect alla lista delle ricette dopo la cancellazione
     }
@@ -84,15 +91,30 @@ public class CuocoController {
 	@GetMapping("/admin/editcuoco/{id}")
 	public String getUpdateForm(@PathVariable Long id, Model model) {
     Cuoco cuoco = cuocoService.findById(id);
-    model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello
+    User user = getCredentials().getUser();
+	if (!getCredentials().isAdmin()
+			&& cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != id) {
+		return "redirect:/error";
+	}
+	model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello
     return "formUpdateCuoco.html"; // Ritorna il nome del template da renderizzare
 	}
 
 	@PostMapping("/admin/updatecuoco/{id}")
-	public String updateCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco) {
-    	cuoco.setId(id); // Imposta l'ID sulla cuoco per l'aggiornamento
+	public String updateCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine) throws IOException {
+		if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (cuoco.getImmagini() == null) {
+                cuoco.setImmagini(new ArrayList<>());
+            }
+            cuoco.getImmagini().add(img);
+            immagineService.save(img);
+        }
+		cuoco.setId(id); // Imposta l'ID sulla cuoco per l'aggiornamento
     	this.cuocoService.save(cuoco); // Salva il cuoco aggiornato
-    	return "redirect:/cuochi/" + cuoco.getId(); // Redirect alla pagina del cuoco aggiornato
-}
+    	return "redirect:/cuochi/" + cuoco.getId(); // Redirect alla pagina del cuoco aggiornato	
+	}
 
 }

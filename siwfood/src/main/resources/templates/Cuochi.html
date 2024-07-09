@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Cuochi</title>
+    <meta charset="UTF-8">
+    <title>Cuochi</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
 <body>
-    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%"/></a></div>
-    <h1>Cuochi</h1>
-	<div th:if="${cuochi==null||cuochi.isEmpty()}">Non ci sono Cuochi nel sistema</div>
-	<ul>
-	 <li th:each="cuoco:${cuochi}">
-	  <a th:href="@{'/cuochi' + '/' + ${cuoco.id}}" th:text="${cuoco.nome+ ' '+cuoco.cognome}">Nome Cuoco Up! 
-	 		 (2000)</a>
-	 </li>
-	</ul>
-	<div>
-		<a href="/admin/formNewCuoco">Aggiungi un nuovo Cuoco </a>
-	</div>
-	<div>
-        <a href="/">torna all'home page</a>
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo-siwfood.png" class="logo" /></a>
+    </div>
+
+    <div class="wrapper">
+        <h1>Cuochi</h1>
+        <div th:if="${cuochi == null || cuochi.isEmpty()}" class="message">Non ci sono Cuochi nel sistema</div>
+        <ul class="ricette-list">
+            <li class="ricetta-item" th:each="cuoco : ${cuochi}">
+                <a th:href="@{'/cuochi/' + ${cuoco.id}}" th:text="${cuoco.nome + ' ' + cuoco.cognome}">Nome Cuoco</a>
+            </li>
+        </ul>
+        <div class="navigation">
+            <a href="/admin/formNewCuoco">Aggiungi un nuovo Cuoco</a>
+        </div>
+        <div class="navigation">
+            <a href="/">Torna all'home page</a>
+        </div>
     </div>
 </body>
 </html>

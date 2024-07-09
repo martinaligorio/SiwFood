@@ -1,52 +1,55 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Cuoco</title>
     <link rel="stylesheet" href="/css/stile.css" />
 </head>
-
 <body>
-    <div><a href="/"><img src="/images/logo-siwfood.png" width="50%" /></a></div>
-    
-    <div th:object="${cuoco}">
-        <img th:if="${cuoco.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImage().getBase64()}" width="30%"/>
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo-siwfood.png" class="logo" /></a>
     </div>
     
-    <div>
-        <h1 th:text="${cuoco.nome+ ' ' + cuoco.cognome}">Nome Cognome</h1>
-        <div>Data di nascita: <span th:text="'' + ${cuoco.data_nascita} + ''">2000</span></div>
+    <div class="wrapper" th:object="${cuoco}">
+        <div>
+            <img th:if="${cuoco.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImage().getBase64()}" class="ricetta-img" />
+        </div>
         
         <div>
-            <h3>Ricette </h3>
-            <div th:if="${#lists.isEmpty(cuoco.ricette)}">
-                <p>Non ci sono attualmente ricette per questo cuoco</p>
+            <h1 th:text="${cuoco.nome + ' ' + cuoco.cognome}">Nome Cognome</h1>
+            <div class="message">Data di nascita: <span th:text="${cuoco.data_nascita}">2000</span></div>
+            
+            <div>
+                <h3>Ricette</h3>
+                <div th:if="${#lists.isEmpty(cuoco.ricette)}" class="message">
+                    <p>Non ci sono attualmente ricette per questo cuoco</p>
+                </div>
+                <ul th:unless="${#lists.isEmpty(cuoco.ricette)}" class="ricette-list">
+                    <li th:each="ricetta : ${cuoco.ricette}" class="ricetta-item">
+                        <span th:text="${ricetta.nome}"></span>
+                    </li>
+                </ul>
             </div>
-            <ul th:unless="${#lists.isEmpty(cuoco.ricette)}">
-                <li th:each="ricetta : ${cuoco.ricette}">
-                    <span th:text="${ricetta.nome}"></span>
-                </li>
-            </ul>
         </div>
-    </div>
+            
+        <div th:if="${cuoco == null}" class="message">Non esiste</div>
         
-    <div th:if="${cuoco == null}">Non esiste</div>
-   
-    <div>
-        <a th:href="@{/cuochi}">torna alla lista dei cuochi</a>    
+        <div class="navigation">
+            <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>    
+        </div>
+
+        <div class="navigation">
+            <a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a>
+        </div>
+        
+        <div class="navigation">
+            <a th:href="@{/chef/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
+        </div>
+
+        <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post" class="navigation">
+            <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
+            <button type="submit">Elimina Cuoco</button>
+        </form>
     </div>
-
-    <div><a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a></div>
-    
-    <div>
-        <a th:href="@{/chef/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
-    </div>
-
-    <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post">
-        <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
-        <button type="submit">Elimina Cuoco</button>
-    </form>
-
 </body>
-
 </html>
