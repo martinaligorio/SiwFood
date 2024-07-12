@@ -15,6 +15,9 @@ public class RicettaService {
     @Autowired 
     private RicettaRepository ricettaRepository; 
 
+    @Autowired 
+    private CuocoService cuocoService; 
+
     public Ricetta findById(Long id) {
         return ricettaRepository.findById(id).get();
     }
@@ -39,4 +42,8 @@ public class RicettaService {
         ricettaRepository.deleteById(id);
     }
 
+    public void addRicettaToCuoco(Ricetta ricetta,Long cuocoid){
+        ricetta.setCuoco(this.cuocoService.findById(cuocoid));
+        this.save(ricetta);
+    }
 }    

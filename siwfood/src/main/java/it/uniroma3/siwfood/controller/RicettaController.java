@@ -89,26 +89,6 @@ public class RicettaController extends GlobalController{
 		return "redirect:/ricette/"+ ricetta.getId();
     }
 	
-	
-	//gestisce la visualizzazione del form
-	@GetMapping("/chef/formNewIngrediente/{ricetta_id}")
-	public String formNewIngrediente(@PathVariable("ricetta_id") Long ricettaId, Model model) {
-		Ricetta ricetta = this.ricettaService.findById(ricettaId);
-		Cuoco cuoco = ricetta.getCuoco();
-		Long cuocoId = cuoco.getId();
-		
-		User user = getCredentials().getUser();
-		if ((!getCredentials().isAdmin()
-				&& cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != cuocoId)
-				|| cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != cuocoId) {
-			return "redirect:/error";
-		}
-		
-		model.addAttribute("ricetta", ricetta);
-		model.addAttribute("ingrediente", new Ingrediente());
-		return "formNewIngrediente.html";
-	}
-
 	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
 	@PostMapping("/chef/saveIngredienti/{ricetta_id}")
 	public String newIngredienti(/*@Valid*/ @PathVariable("ricetta_id") Long id, @ModelAttribute Ingrediente ingrediente,@RequestParam("immagine") MultipartFile immagine) throws IOException {/* ,BindingResult bindingResult*/
@@ -126,8 +106,9 @@ public class RicettaController extends GlobalController{
 			}
 			Ricetta ricetta = this.ricettaService.findById(id);
 			ingrediente.setRicetta(ricetta);
+			ricetta.getIngredienti().add(ingrediente);
 			this.ingredienteService.save(ingrediente);
-			return "redirect:/ricette/" + ricetta.getId();
+			return "redirect:/chef/editricetta/"+ ricetta.getId();
 		//} else {
 		//	return "formNewIngrediente.html";
 		//}
@@ -167,7 +148,8 @@ public class RicettaController extends GlobalController{
 	@GetMapping("/chef/editricetta/{id}")  //Mappa le richieste GET all'URL /ricetta/update/{id}.
     public String getUpdateForm(@PathVariable("id") Long id, Model model) {
 		Ricetta ricetta = this.ricettaService.findById(id);
-        User user = getCredentials().getUser();
+        
+		User user = getCredentials().getUser();
         if ((!getCredentials().isAdmin()
                 && cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != ricetta.getCuoco()
                         .getId())
@@ -175,15 +157,29 @@ public class RicettaController extends GlobalController{
                         .getId()) {
             return "redirect:/error";
         }
+		
     	model.addAttribute("ricetta", this.ricettaService.findById(id)); 
-        return "formUpdateRicetta.html"; //Indica il nome del template che Spring deve utilizzare per generare la risposta HTML.
+        model.addAttribute("ingredienti", this.ricettaService.findById(id).getIngredienti());
+		model.addAttribute("ingrediente", new Ingrediente());
+		return "formUpdateRicetta.html"; //Indica il nome del template che Spring deve utilizzare per generare la risposta HTML.
 	}
 
     //@ModelAttribute: Associa i dati del modulo ai parametri del metodo.
-    @PostMapping("/chef/updatericetta/{id}")
-    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
-        ricetta.setId(id);
-		this.ricettaService.save(ricetta);
-        return "redirect:/ricette/" + ricetta.getId(); // Redirect alla pagina della ricetta aggiornata
+    @PostMapping("/chef/updatericetta/{id}/{cuoco_id}")
+    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @PathVariable("cuoco_id") Long cuoco_id,@RequestParam("immagine") MultipartFile immagine) throws IOException {
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (ricetta.getImmagini() == null) {
+                ricetta.setImmagini(new ArrayList<>());
+            }
+            ricetta.getImmagini().add(img);
+            immagineService.save(img);
+        }
+		ricetta.setId(id);
+		this.ricettaService.addRicettaToCuoco(ricetta, cuoco_id);
+		return "redirect:/ricette/" + ricetta.getId(); // Redirect alla pagina della ricetta aggiornata
     }
+
 }

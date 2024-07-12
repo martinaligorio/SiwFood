@@ -10,7 +10,7 @@
     </div>
 
     <div class="wrapper">
-        <div>
+        <div th:if="${ricetta.immagini}">
             <img th:if="${ricetta.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImage().getBase64()}" class="ricetta-img"/>
         </div>
 
@@ -36,9 +36,6 @@
 
         <div class="message" th:if="${ricetta == null}">Non esiste</div>
 
-        <div class="navigation">
-            <a th:href="@{/chef/formNewIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}">Aggiungi Ingrediente</a>
-        </div>
         <div class="navigation">
             <a th:href="@{/chef/editricetta/{id}(id=${ricetta.id})}">Aggiorna Ricetta</a>
         </div>

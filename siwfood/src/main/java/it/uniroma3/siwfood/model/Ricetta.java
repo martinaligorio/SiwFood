@@ -143,6 +143,8 @@ public class Ricetta {
 
     /*METODI PER LE IMMAGINI*/
     public Immagine getFirstImage(){
+        if(this.immagini.size()==0)
+            return null;
         return this.immagini.get(0);
     } 
 
