@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dettaglio Ricetta</title>
     <link rel="stylesheet" href="/css/stile.css" />
@@ -10,15 +10,22 @@
     </div>
 
     <div class="wrapper">
+        <!-- Immagine della ricetta -->
         <div th:if="${ricetta.immagini}">
-            <img th:if="${ricetta.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImage().getBase64()}" class="ricetta-img"/>
+            <img th:if="${ricetta.getFirstImage() != null}" 
+                 th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImage().getBase64()}" 
+                 class="ricetta-img"/>
         </div>
 
+        <!-- Dettagli della ricetta -->
         <div th:if="${ricetta != null}">
-            <h1 th:text="${ricetta.nome + ' ' + ricetta.cuoco.cognome}">Nome Cognome</h1>
-            <div class="message">Descrizione: <span th:text="${ricetta.descrizione}">Descrizione</span></div>
+            <h1 th:text="${ricetta.nome}">Nome Ricetta</h1>
+            <div class="message">
+                Descrizione: <span th:text="${ricetta.descrizione}">Descrizione</span>
+            </div>
         </div>
 
+        <!-- Ingredienti della ricetta -->
         <div>
             <h3>Ingredienti</h3>
             <ul class="ricette-list">
@@ -29,26 +36,35 @@
             </ul>
         </div>
 
+        <!-- Cuoco associato alla ricetta -->
         <div>
-            <h3>Cuoco: </h3>
-            <p class="message" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}">Nome Cuoco</p>
+            <h3>Cuoco:</h3>
+            <p class="message">
+                <a th:href="@{/cuochi/{id}(id=${ricetta.cuoco.id})}" 
+                   th:text="${ricetta.cuoco.nome + ' ' + ricetta.cuoco.cognome}">Nome Cuoco</a>
+            </p>
         </div>
 
+        <!-- Messaggio per ricetta non trovata -->
         <div class="message" th:if="${ricetta == null}">Non esiste</div>
 
+        <!-- Link per aggiornare la ricetta -->
         <div class="navigation">
             <a th:href="@{/chef/editricetta/{id}(id=${ricetta.id})}">Aggiorna Ricetta</a>
         </div>
+
+        <!-- Link per tornare alla lista delle ricette -->
         <div class="navigation">
             <a th:href="@{/ricette}">Torna alla lista delle ricette</a>
         </div>
 
-        <!-- Form per la cancellazione -->
+        <!-- Form per eliminare la ricetta -->
         <form th:action="@{/chef/deletericetta/{id}(id=${ricetta.id})}" method="post" class="navigation">
-            <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
+            <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
             <button type="submit">Elimina Ricetta</button>
         </form>
 
+        <!-- Link per tornare alla lista delle ricette (duplicato, puoi rimuoverlo se non necessario) -->
         <div class="navigation">
             <a th:href="@{/ricette}">Torna alla lista delle ricette</a>
         </div>

@@ -134,16 +134,26 @@ public class RicettaController extends GlobalController{
 
 	//@PathVariable Estrae variabili di percorso dall'URL della richiesta.
 	@PostMapping("/chef/deletericetta/{id}")
-    public String deleteRicetta(@PathVariable Long id) {
+	public String deleteRicetta(@PathVariable Long id) {
+		// Recupera l'utente corrente
 		User user = getCredentials().getUser();
-		if ((!getCredentials().isAdmin()
-                && cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != id)
-                || cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != id) {
-            return "redirect:/error";
-        }
-        ricettaService.deleteRicettaById(id);
-        return "redirect:/ricette"; // Redirect alla lista delle ricette dopo la cancellazione
-    }
+		// Trova la ricetta da eliminare
+		Ricetta ricetta = ricettaService.findById(id);
+		// Verifica se la ricetta esiste
+		if (ricetta == null) {
+			return "redirect:/error?message=Ricetta non trovata";
+		}
+		// Controlla se l'utente ha i permessi per eliminare la ricetta
+		Long cuocoId = cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId();
+		if (!getCredentials().isAdmin() && !cuocoId.equals(ricetta.getCuoco().getId())) {
+			return "redirect:/error?message=Permessi insufficienti";
+		}
+		// Elimina la ricetta
+		ricettaService.deleteRicettaById(id);
+		// Redirect alla lista delle ricette dopo la cancellazione
+		return "redirect:/ricette";
+	}
+
 	
 	@GetMapping("/chef/editricetta/{id}")  //Mappa le richieste GET all'URL /ricetta/update/{id}.
     public String getUpdateForm(@PathVariable("id") Long id, Model model) {

@@ -18,19 +18,22 @@ import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.User;
+import it.uniroma3.siwfood.service.CredentialsService;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
 //import it.uniroma3.siwfood.validator.CuocoValidator;
+import it.uniroma3.siwfood.service.UserService;
 
 
 
 @Controller
 public class CuocoController extends GlobalController{
-	
+	@Autowired UserService userService;
 	@Autowired CuocoService cuocoService;
 	//@Autowired CuocoValidator cuocoValidator;
 	@Autowired private ImmagineService immagineService;
-	
+	@Autowired CredentialsService credentialsService;
+
 	@GetMapping("/cuochi/{id}")//senza s
 	public String getCuoco(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cuoco", this.cuocoService.findById(id));
@@ -83,7 +86,15 @@ public class CuocoController extends GlobalController{
     public String deleteCuoco(@PathVariable Long id) {
 		if (!getCredentials().isAdmin()) {
             return "redirect:/error";
+        }// Trova il cuoco da eliminare
+        Cuoco cuoco = cuocoService.findById(id);
+        // Trova l'utente associato al cuoco
+        User user = userService.findByCuoco(cuoco);
+        // Elimina le credenziali associate all'utente
+        if (user != null) {
+            credentialsService.deleteCredentialsByUser(user.getId());
         }
+        // Elimina il cuoco
         cuocoService.deleteCuocoById(id);
         return "redirect:/cuochi"; // Redirect alla lista delle ricette dopo la cancellazione
     }
@@ -92,8 +103,7 @@ public class CuocoController extends GlobalController{
 	public String getUpdateForm(@PathVariable Long id, Model model) {
     Cuoco cuoco = cuocoService.findById(id);
     User user = getCredentials().getUser();
-	if (!getCredentials().isAdmin()
-			&& cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId() != id) {
+	if (!getCredentials().isAdmin()) {
 		return "redirect:/error";
 	}
 	model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello

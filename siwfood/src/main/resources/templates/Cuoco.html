@@ -11,14 +11,19 @@
     </div>
     
     <div class="wrapper" th:object="${cuoco}">
+        <!-- Immagine del cuoco -->
         <div>
-            <img th:if="${cuoco.getFirstImage() != null}" th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImage().getBase64()}" class="ricetta-img" />
+            <img th:if="${cuoco.getFirstImage() != null}" 
+                 th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImage().getBase64()}" 
+                 class="ricetta-img" />
         </div>
         
+        <!-- Dettagli del cuoco -->
         <div>
             <h1 th:text="${cuoco.nome + ' ' + cuoco.cognome}">Nome Cognome</h1>
             <div class="message">Data di nascita: <span th:text="${cuoco.data_nascita}">2000</span></div>
             
+            <!-- Lista delle ricette del cuoco -->
             <div>
                 <h3>Ricette</h3>
                 <div th:if="${#lists.isEmpty(cuoco.ricette)}" class="message">
@@ -26,28 +31,29 @@
                 </div>
                 <ul th:unless="${#lists.isEmpty(cuoco.ricette)}" class="ricette-list">
                     <li th:each="ricetta : ${cuoco.ricette}" class="ricetta-item">
-                        <span th:text="${ricetta.nome}"></span>
+                        <a th:href="@{/ricette/{id}(id=${ricetta.id})}" th:text="${ricetta.nome}">Nome Ricetta</a>
                     </li>
                 </ul>
             </div>
         </div>
             
+        <!-- Messaggio se il cuoco non esiste -->
         <div th:if="${cuoco == null}" class="message">Non esiste</div>
         
+        <!-- Navigazione -->
         <div class="navigation">
             <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>    
         </div>
-
         <div class="navigation">
             <a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a>
         </div>
-        
         <div class="navigation">
             <a th:href="@{/chef/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
         </div>
 
+        <!-- Form per eliminare il cuoco -->
         <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post" class="navigation">
-            <input type="hidden" name="_method" value="post"> <!-- Simula DELETE -->
+            <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
             <button type="submit">Elimina Cuoco</button>
         </form>
     </div>

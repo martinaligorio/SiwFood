@@ -31,7 +31,7 @@ public class User {
 
     private String surname;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private Cuoco cuoco;
 
     public Cuoco getCuoco() {
