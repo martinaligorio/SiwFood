@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,7 +87,6 @@ public class RicettaController extends GlobalController{
 		return "redirect:/ricette/"+ ricetta.getId();
     }
 	
-	//gestisce il salvataggio della ricetta e il reindirizzamento alla pagina della ricetta appena creata
 	@PostMapping("/chef/saveIngredienti/{ricetta_id}")
 	public String newIngredienti(/*@Valid*/ @PathVariable("ricetta_id") Long id, @ModelAttribute Ingrediente ingrediente,@RequestParam("immagine") MultipartFile immagine) throws IOException {/* ,BindingResult bindingResult*/
 		//this.ingredienteValidator.validate(ingrediente, bindingResult);
@@ -125,7 +122,6 @@ public class RicettaController extends GlobalController{
         model.addAttribute("ricette", this.ricettaService.findByIngredienteNome(ingrediente)); 
         return "ricette.html"; 
     }
-
 
 	@GetMapping("/formSearch")
 	public String getFormSearch() {
@@ -191,5 +187,33 @@ public class RicettaController extends GlobalController{
 		this.ricettaService.addRicettaToCuoco(ricetta, cuoco_id);
 		return "redirect:/ricette/" + ricetta.getId(); // Redirect alla pagina della ricetta aggiornata
     }
+
+	@GetMapping("/ricette/{ricettaId}/ingrediente/{ingredienteId}")
+    public String getIngredienteDetails(@PathVariable Long ricettaId, @PathVariable Long ingredienteId, Model model) {
+        Ingrediente ingrediente = ingredienteService.findById(ingredienteId);
+        model.addAttribute("ingrediente", ingrediente);
+        return "ingrediente.html";
+    }
+
+    @PostMapping("/chef/ricette/{ricettaId}/ingrediente/{ingredienteId}/delete")
+	public String deleteIngrediente(@PathVariable Long ricettaId, @PathVariable Long ingredienteId) {
+    // Recupera l'utente corrente
+    User user = getCredentials().getUser();
+    // Trova la ricetta da cui eliminare l'ingrediente
+    Ricetta ricetta = ricettaService.findById(ricettaId);
+    // Trova l'ingrediente da eliminare
+    Ingrediente ingrediente = ingredienteService.findById(ingredienteId);
+    if (ingrediente == null) {
+        return "redirect:/error?message=Ingrediente non trovato";
+    }
+    // Verifica se l'utente ha i permessi per eliminare l'ingrediente
+    Long cuocoId = cuocoService.findbyNomeCognome(user.getName(), user.getSurname()).getId();
+    if (!getCredentials().isAdmin() && !cuocoId.equals(ricetta.getCuoco().getId())) {
+        return "redirect:/error?message=Permessi insufficienti";
+    }
+    ingredienteService.deleteIngredienteById(ingredienteId);
+    // Redirect alla pagina della ricetta aggiornata
+    return "redirect:/ricette/" + ricettaId;
+}
 
 }

@@ -30,7 +30,9 @@
             <h3>Ingredienti</h3>
             <ul class="ricette-list">
                 <li class="ricetta-item" th:each="ingrediente : ${ricetta.ingredienti}">
-                    <span th:text="${ingrediente.nome}">Nome Ingrediente</span>: 
+                    <a th:href="@{/ricette/{ricettaId}/ingrediente/{ingredienteId}(ricettaId=${ingrediente.ricetta.id}, ingredienteId=${ingrediente.id})}">
+                        <span th:text="${ingrediente.nome}">Nome Ingrediente</span>
+                    </a>: 
                     <span th:text="${ingrediente.quantita}">Quantità Ingrediente</span>
                 </li>
             </ul>

@@ -1,12 +1,10 @@
 package it.uniroma3.siwfood.service;
 
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import it.uniroma3.siwfood.model.Credentials;
-import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.User;
 import it.uniroma3.siwfood.repository.CredentialsRepository;
 
@@ -36,7 +34,7 @@ public class CredentialsService {
         return credentialsRepository.save(credentials);
    }
    public void deleteCredentialsByUser(Long idU) {
-	User user = userService.findById(idU);
+		User user = userService.findById(idU);
         Credentials credentials = credentialsRepository.findByUser(user);
         credentialsRepository.delete(credentials);
     }

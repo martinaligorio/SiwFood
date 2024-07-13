@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dettaglio Ingrediente</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+<body>
+    <div class="logo-container">
+        <a href="/"><img src="/images/logo-siwfood.png" class="logo" /></a>
+    </div>
+
+    <div class="wrapper">
+        <!-- Immagine dell'ingrediente -->
+        <div th:if="${ingrediente.immagini}">
+            <img th:if="${ingrediente.getFirstImage() != null}" 
+                 th:src="'data:image/jpeg;base64,' + ${ingrediente.getFirstImage().getBase64()}" 
+                 class="ingrediente-img"/>
+        </div>
+
+        <!-- Dettagli dell'ingrediente -->
+        <div th:if="${ingrediente != null}">
+            <h1 th:text="${ingrediente.nome}">Nome Ingrediente</h1>
+            <div class="message">
+                Quantità: <span th:text="${ingrediente.quantita}">Quantità</span>
+            </div>
+        </div>
+
+        <!-- Messaggio per ingrediente non trovato -->
+        <div class="message" th:if="${ingrediente == null}">Ingrediente non trovato</div>
+
+        <!-- Link per tornare alla ricetta -->
+        <div class="navigation">
+            <a th:href="@{/ricette/{id}(id=${ingrediente.ricetta.id})}">Torna alla ricetta</a>
+        </div>
+
+        <!-- Form per eliminare l'ingrediente -->
+        <form th:action="@{/chef/ricette/{ricettaId}/ingrediente/{ingredienteId}/delete(ricettaId=${ingrediente.ricetta.id}, ingredienteId=${ingrediente.id})}" method="post" class="navigation">
+            <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
+            <button type="submit">Elimina Ingrediente</button>
+        </form>
+    </div>
+</body>
+</html>
