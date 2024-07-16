@@ -46,26 +46,24 @@
         </div>
 
         <div th:if="${userDetails}">
-        <div class="navigation">
-            <a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a>
+            <div class="navigation">
+                <a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a>
+        
+            <!-- Form per eliminare il cuoco -->
+            <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post" class="navigation">
+                <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
+                <button type="submit">Elimina Cuoco</button>
+            </form>
+            </div>
+            <div class="navigation">
+                <a th:href="@{/chef/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
+            </div>
         </div>
-
+        
         <!-- Messaggio per l'utente non loggato -->
         <div th:unless="${userDetails}">
             <h3>Loggati per avere accesso alle operazioni</h3>
         </div>
-
-        <!-- Form per eliminare il cuoco -->
-        <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post" class="navigation">
-            <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
-            <button type="submit">Elimina Cuoco</button>
-        </form>
-        </div>
-        <div class="navigation">
-            <a th:href="@{/chef/formNewRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Aggiungi ricetta</a>    
-        </div>
-
-        
     </div>
 </body>
 </html>

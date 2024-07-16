@@ -50,21 +50,25 @@
         <!-- Messaggio per ricetta non trovata -->
         <div class="message" th:if="${ricetta == null}">Non esiste</div>
 
-        <!-- Link per aggiornare la ricetta -->
-        <div class="navigation">
-            <a th:href="@{/chef/editricetta/{id}(id=${ricetta.id})}">Aggiorna Ricetta</a>
+        <!-- Controllo se l'utente è loggato e se è admin -->
+        <div th:if="${userDetails}">
+            <!-- Link per aggiornare la ricetta -->
+            <div class="navigation">
+                <a th:href="@{/chef/editricetta/{id}(id=${ricetta.id})}">Aggiorna Ricetta</a>
+            </div>
+
+            
+            <!-- Form per eliminare la ricetta -->
+            <form th:action="@{/chef/deletericetta/{id}(id=${ricetta.id})}" method="post" class="navigation">
+                <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
+                <button type="submit">Elimina Ricetta</button>
+            </form>
         </div>
 
         <!-- Link per tornare alla lista delle ricette -->
         <div class="navigation">
             <a th:href="@{/ricette}">Torna alla lista delle ricette</a>
         </div>
-
-        <!-- Form per eliminare la ricetta -->
-        <form th:action="@{/chef/deletericetta/{id}(id=${ricetta.id})}" method="post" class="navigation">
-            <input type="hidden" name="_method" value="delete"> <!-- Simula DELETE -->
-            <button type="submit">Elimina Ricetta</button>
-        </form>
 
         <!-- Link per tornare alla lista delle ricette (duplicato, puoi rimuoverlo se non necessario) -->
         <div class="navigation">
