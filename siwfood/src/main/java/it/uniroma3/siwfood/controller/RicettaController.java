@@ -24,7 +24,7 @@ import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
 //import it.uniroma3.siwfood.validator.IngredienteValidator;
 //import it.uniroma3.siwfood.validator.RicettaValidator;
-import jakarta.validation.Valid;
+
 ;
 
 
@@ -172,20 +172,29 @@ public class RicettaController extends GlobalController{
 
     //@ModelAttribute: Associa i dati del modulo ai parametri del metodo.
     @PostMapping("/chef/updatericetta/{id}/{cuoco_id}")
-    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @PathVariable("cuoco_id") Long cuoco_id,@RequestParam("immagine") MultipartFile immagine) throws IOException {
+    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute Ingrediente ingrediente,
+    @RequestParam("immagine") MultipartFile immagine)
+    throws IOException {
+        Ricetta tmpRicetta = ricettaService.findById(id);
+        if(ricetta.getNome() != null) {
+            tmpRicetta.setNome(ricetta.getNome());
+        }
+        if(ricetta.getDescrizione() != null) {
+            tmpRicetta.setDescrizione(ricetta.getDescrizione());
+        }
+
+        
+
         if (!immagine.isEmpty()) {
             Immagine img = new Immagine();
             img.setFileName(immagine.getOriginalFilename());
             img.setImageData(immagine.getBytes());
-            if (ricetta.getImmagini() == null) {
-                ricetta.setImmagini(new ArrayList<>());
-            }
-            ricetta.getImmagini().add(img);
+            tmpRicetta.getImmagini().add(img);
             immagineService.save(img);
         }
-		ricetta.setId(id);
-		this.ricettaService.addRicettaToCuoco(ricetta, cuoco_id);
-		return "redirect:/ricette/" + ricetta.getId(); // Redirect alla pagina della ricetta aggiornata
+
+    
+        return "redirect:/ricette/" + tmpRicetta.getId();
     }
 
 	@GetMapping("/ricette/{ricettaId}/ingrediente/{ingredienteId}")

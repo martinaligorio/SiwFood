@@ -1,5 +1,6 @@
 package it.uniroma3.siwfood.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,7 +28,7 @@ public class Ricetta {
     private String descrizione;
     
     @ElementCollection
-    private List<Immagine> immagini;
+    private List<Immagine> immagini=new ArrayList<>();
 
     @OneToMany(mappedBy="ricetta",cascade=CascadeType.ALL)
     private List<Ingrediente> ingredienti;
@@ -47,6 +48,10 @@ public class Ricetta {
         this.cuoco = cuoco;
     }
 
+    public boolean hasImages() {
+        return !this.immagini.isEmpty();
+    }
+    
     public Long getId() {
         return id;
     }
