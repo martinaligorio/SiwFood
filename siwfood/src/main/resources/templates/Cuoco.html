@@ -12,7 +12,7 @@
     
     <div class="wrapper" th:object="${cuoco}">
         <!-- Immagine del cuoco -->
-        <div>
+        <div class="container">
             <img th:if="${cuoco.getFirstImage() != null}" 
                  th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImage().getBase64()}" 
                  class="ricetta-img" />
