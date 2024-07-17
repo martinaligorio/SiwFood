@@ -11,11 +11,13 @@
 
     <div class="wrapper">
         <!-- Immagine della ricetta -->
-        <div th:if="${ricetta.hasImages() == true}">
-            <span th:each="immagine: ${ricetta.immagini}">
-                <img
-                    th:src="'data:image/jpeg;base64,' + ${immagine.getBase64()}" width="30%" />
-            </span>
+        <div class="container">
+            <div th:if="${ricetta.hasImages() == true}">
+                <span th:each="immagine: ${ricetta.immagini}">
+                    <img
+                        th:src="'data:image/jpeg;base64,' + ${immagine.getBase64()}" width="30%" />
+                </span>
+            </div>
         </div>
 
         <!-- Dettagli della ricetta -->
