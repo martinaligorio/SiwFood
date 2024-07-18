@@ -21,6 +21,8 @@
         <ul class="ricette-list">
             <li th:each="ricetta : ${ricette}" class="ricetta-item">
                 <a th:href="@{'/ricette/' + ${ricetta.id}}" th:text="${ricetta.nome}">Nome Ricetta</a>
+                <p th:text="'' + ${ricetta.cuoco.toString()}">Nome Cuoco</p>
+        </li>
             </li>
         </ul>
 
