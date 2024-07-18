@@ -47,7 +47,7 @@
 
         <div th:if="${userDetails}">
             <div class="navigation">
-                <a th:href="@{/admin/updatecuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a>
+                <a th:href="@{/admin/editcuoco/{id}(id=${cuoco.id})}">Aggiorna dati cuoco</a>
         
             <!-- Form per eliminare il cuoco -->
             <form th:action="@{/admin/deletecuoco/{id}(id=${cuoco.id})}" method="post" class="navigation">

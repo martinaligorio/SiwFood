@@ -100,12 +100,11 @@ public class CuocoController extends GlobalController{
 	@GetMapping("/admin/editcuoco/{id}")
 	public String getUpdateForm(@PathVariable Long id, Model model) {
     Cuoco cuoco = cuocoService.findById(id);
-    User user = getCredentials().getUser();
 	if (!getCredentials().isAdmin()) {
 		return "redirect:/error";
-	}
-	model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello
-    return "formUpdateCuoco.html"; // Ritorna il nome del template da renderizzare
+		}
+		model.addAttribute("cuoco", cuoco); // Aggiunge l'oggetto 'cuoco' al modello
+		return "formUpdateCuoco.html"; // Ritorna il nome del template da renderizzare
 	}
 
 	@PostMapping("/admin/updatecuoco/{id}")
